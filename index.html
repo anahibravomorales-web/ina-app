@@ -3,14 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>INA - RRHH Senior Partner</title>
+  <title>INA Pro - Strategic HR Partner</title>
   
   <meta name="theme-color" content="#3b0764">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="INA RRHH">
-  <link rel="manifest" href='data:application/manifest+json,{"name":"INA RRHH Senior","short_name":"INA","start_url":".","display":"standalone","background_color":"#020617","theme_color":"#3b0764","icons":[{"src":"https://cdn-icons-png.flaticon.com/512/3135/3135715.png","sizes":"512x512","type":"image/png"}]}'>
+  <meta name="apple-mobile-web-app-title" content="INA HR">
+  <link rel="manifest" href='data:application/manifest+json,{"name":"INA RRHH Pro","short_name":"INA","start_url":".","display":"standalone","background_color":"#020617","theme_color":"#3b0764","icons":[{"src":"https://cdn-icons-png.flaticon.com/512/3135/3135715.png","sizes":"512x512","type":"image/png"}]}'>
 
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
@@ -18,60 +17,66 @@
 
   <div class="w-full max-w-md h-full sm:h-[94vh] bg-slate-900 sm:rounded-3xl shadow-2xl flex flex-col overflow-hidden border border-purple-900/40">
     
-    <!-- Encabezado -->
-    <header class="bg-gradient-to-r from-purple-950 via-purple-900 to-indigo-950 text-white p-4 flex items-center justify-between border-b border-purple-800/50 shadow-lg">
-      <div class="flex items-center gap-3">
-        <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-purple-600 to-indigo-500 flex items-center justify-center font-black text-xl shadow-md border border-purple-300/30">
+    <!-- Encabezado Pro -->
+    <header class="bg-gradient-to-r from-purple-950 via-purple-900 to-indigo-950 text-white p-3.5 flex items-center justify-between border-b border-purple-800/50 shadow-lg shrink-0">
+      <div class="flex items-center gap-2.5">
+        <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-purple-600 to-indigo-500 flex items-center justify-center font-black text-lg shadow-md border border-purple-300/30">
           INA
         </div>
         <div>
           <div class="flex items-center gap-1.5">
-            <h1 class="font-bold text-base leading-tight tracking-wide">INA</h1>
-            <span class="bg-purple-500/20 text-purple-300 text-[10px] font-semibold px-2 py-0.5 rounded-full border border-purple-500/30">HR Senior Pro</span>
+            <h1 class="font-bold text-sm leading-tight tracking-wide">INA HR Pro</h1>
+            <span class="bg-purple-500/20 text-purple-300 text-[9px] font-semibold px-1.5 py-0.5 rounded-full border border-purple-500/30">AI Plant Ops</span>
           </div>
-          <p class="text-[11px] text-purple-300/80">People & Culture Strategic Partner</p>
+          <p class="text-[10px] text-purple-300/80">People Operations & Strategy</p>
         </div>
       </div>
-      <div class="flex gap-1.5">
-        <button onclick="exportarDatos()" title="Copia de Seguridad" class="text-xs bg-purple-800/40 hover:bg-purple-700/60 text-purple-200 px-2.5 py-1.5 rounded-xl border border-purple-700/50 transition">
-          📥 Backup
+      <div class="flex gap-1">
+        <button onclick="configurarApiKey()" title="Configurar API Key" class="text-[11px] bg-purple-800/50 hover:bg-purple-700/60 text-purple-200 px-2 py-1 rounded-xl border border-purple-700/50 transition">
+          🔑 Key
         </button>
-        <button onclick="limpiarTodo()" title="Vaciar Registros" class="text-xs bg-red-950/40 hover:bg-red-900/60 text-red-300 px-2 py-1.5 rounded-xl border border-red-800/40 transition">
-          🗑️
+        <button onclick="generarReporteJefe()" title="Reporte Ejecutivo para Jefe" class="text-[11px] bg-indigo-800/50 hover:bg-indigo-700/60 text-indigo-200 px-2 py-1 rounded-xl border border-indigo-700/50 transition">
+          📊 Jefe
+        </button>
+        <button onclick="exportarDatos()" title="Copia de Seguridad" class="text-[11px] bg-purple-900/40 hover:bg-purple-800/60 text-purple-300 px-2 py-1 rounded-xl border border-purple-800/40 transition">
+          📥
         </button>
       </div>
     </header>
 
-    <!-- Navegación -->
-    <div class="flex border-b border-purple-900/40 bg-slate-950/60">
-      <button onclick="cambiarPestana('chat')" id="btn-chat" class="flex-1 py-3 text-xs font-bold border-b-2 border-purple-500 text-purple-300 bg-purple-950/20 transition">
-        💬 Chat de Consultas
+    <!-- Navegación de 3 Pestañas -->
+    <div class="flex border-b border-purple-900/40 bg-slate-950/80 shrink-0">
+      <button onclick="cambiarPestana('chat')" id="btn-chat" class="flex-1 py-2.5 text-xs font-bold border-b-2 border-purple-500 text-purple-300 bg-purple-950/20 transition">
+        💬 Chat IA
       </button>
-      <button onclick="cambiarPestana('agenda')" id="btn-agenda" class="flex-1 py-3 text-xs font-bold text-slate-400 hover:text-slate-200 transition">
-        📋 Tablero de Gestión
+      <button onclick="cambiarPestana('agenda')" id="btn-agenda" class="flex-1 py-2.5 text-xs font-bold text-slate-400 hover:text-slate-200 transition">
+        📋 Tablero
+      </button>
+      <button onclick="cambiarPestana('nomina')" id="btn-nomina" class="flex-1 py-2.5 text-xs font-bold text-slate-400 hover:text-slate-200 transition">
+        👥 Nómina
       </button>
     </div>
 
     <!-- VISTA CHAT -->
     <div id="vista-chat" class="flex-1 flex flex-col justify-between overflow-hidden bg-slate-900/80">
-      <div id="contenedor-mensajes" class="flex-1 overflow-y-auto p-4 space-y-4">
+      <div id="contenedor-mensajes" class="flex-1 overflow-y-auto p-3.5 space-y-3">
         <div class="flex justify-start">
-          <div class="max-w-[88%] bg-slate-800/90 border border-purple-500/20 rounded-2xl rounded-bl-none p-3.5 text-xs text-slate-200 shadow-lg leading-relaxed">
-            <p class="font-semibold text-purple-300 mb-1">💼 Asistente Senior de RRHH activa.</p>
-            Hola. He ajustado los filtros de análisis para enfocarme rigurosamente en Gestión de Desempeño, Clima y Conducta. ¿Qué caso o incidencia registramos ahora?
+          <div class="max-w-[90%] bg-slate-800/90 border border-purple-500/20 rounded-2xl rounded-bl-none p-3 text-xs text-slate-200 shadow-lg leading-relaxed">
+            <p class="font-semibold text-purple-300 mb-1">💼 INA conectada a la Nómina de Planta.</p>
+            Escribe o díctame el torbellino de novedades de tus recorridas. Las cruzaré con el personal registrado, los horarios y tus variables para estructurar tu plan de acción.
           </div>
         </div>
       </div>
       
-      <div class="p-3 bg-slate-950 border-t border-purple-900/40 flex gap-2 items-center">
+      <div class="p-2.5 bg-slate-950 border-t border-purple-900/40 flex gap-2 items-center shrink-0">
         <input 
           type="text" 
           id="input-mensaje" 
-          placeholder="Escribe la novedad o incidencia de desempeño..." 
+          placeholder="Escribe o dicta todo lo que pasó..." 
           onkeydown="if(event.key === 'Enter') enviarMensaje()"
-          class="flex-1 bg-slate-900 border border-purple-900/60 rounded-xl px-4 py-2.5 text-xs text-slate-100 outline-none focus:border-purple-500 transition placeholder-slate-500"
+          class="flex-1 bg-slate-900 border border-purple-900/60 rounded-xl px-3.5 py-2 text-xs text-slate-100 outline-none focus:border-purple-500 transition placeholder-slate-500"
         />
-        <button onclick="enviarMensaje()" class="bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white rounded-xl w-10 h-10 flex items-center justify-center font-bold shadow-lg transition">
+        <button onclick="enviarMensaje()" class="bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white rounded-xl w-9 h-9 flex items-center justify-center font-bold shadow-lg transition text-xs shrink-0">
           ➔
         </button>
       </div>
@@ -79,36 +84,126 @@
 
     <!-- VISTA TABLERO -->
     <div id="vista-agenda" class="flex-1 p-3 flex flex-col overflow-hidden bg-slate-900/80 hidden">
-      <div class="flex gap-1.5 overflow-x-auto pb-2 shrink-0">
-        <button onclick="filtrarAgenda('hoy')" id="f-hoy" class="filtro-btn px-3 py-1 rounded-lg text-[11px] font-bold bg-purple-600 text-white shadow">Hoy</button>
-        <button onclick="filtrarAgenda('pendientes')" id="f-pendientes" class="filtro-btn px-3 py-1 rounded-lg text-[11px] font-bold bg-slate-800 text-slate-400 border border-purple-900/40">Pendientes</button>
-        <button onclick="filtrarAgenda('seguimiento')" id="f-seguimiento" class="filtro-btn px-3 py-1 rounded-lg text-[11px] font-bold bg-slate-800 text-slate-400 border border-purple-900/40">Seguimiento</button>
+      <div class="flex gap-1.5 overflow-x-auto pb-1.5 shrink-0">
+        <button onclick="filtrarAgenda('todas')" id="f-todas" class="filtro-btn px-2.5 py-1 rounded-lg text-[10px] font-bold bg-purple-600 text-white shadow">Todas</button>
+        <button onclick="filtrarAgenda('alta')" id="f-alta" class="filtro-btn px-2.5 py-1 rounded-lg text-[10px] font-bold bg-slate-800 text-red-400 border border-red-900/40">🔴 Alta</button>
+        <button onclick="filtrarAgenda('media')" id="f-media" class="filtro-btn px-2.5 py-1 rounded-lg text-[10px] font-bold bg-slate-800 text-yellow-400 border border-yellow-900/40">🟡 Media</button>
+        <button onclick="filtrarAgenda('baja')" id="f-baja" class="filtro-btn px-2.5 py-1 rounded-lg text-[10px] font-bold bg-slate-800 text-green-400 border border-green-900/40">🟢 Baja</button>
       </div>
       <div id="lista-agenda" class="flex-1 overflow-y-auto space-y-2 mt-2 pr-1"></div>
+    </div>
+
+    <!-- VISTA NÓMINA -->
+    <div id="vista-nomina" class="flex-1 p-3 flex flex-col overflow-y-auto bg-slate-900/80 hidden space-y-3">
+      <div class="bg-slate-800/80 p-3 rounded-2xl border border-purple-900/40 shadow">
+        <h3 class="text-xs font-bold text-purple-300 mb-2">➕ Cargar / Editar Empleado</h3>
+        <div class="space-y-2 text-xs">
+          <input type="text" id="nom-nombre" placeholder="Nombre completo (ej: Facundo Peguen)" class="w-full bg-slate-900 border border-purple-900/50 rounded-lg p-2 text-slate-100 outline-none focus:border-purple-500">
+          <div class="flex gap-2">
+            <input type="text" id="nom-legajo" placeholder="Legajo" class="w-1/2 bg-slate-900 border border-purple-900/50 rounded-lg p-2 text-slate-100 outline-none">
+            <input type="text" id="nom-puesto" placeholder="Puesto / Sector" class="w-1/2 bg-slate-900 border border-purple-900/50 rounded-lg p-2 text-slate-100 outline-none">
+          </div>
+          <input type="text" id="nom-horarios" placeholder="Horarios / Turno habitual" class="w-full bg-slate-900 border border-purple-900/50 rounded-lg p-2 text-slate-100 outline-none">
+          <input type="text" id="nom-variable" placeholder="Criterios de Variable / KPI de Desempeño" class="w-full bg-slate-900 border border-purple-900/50 rounded-lg p-2 text-slate-100 outline-none">
+          <button onclick="guardarEmpleado()" class="w-full bg-purple-700 hover:bg-purple-600 text-white font-bold py-2 rounded-xl text-xs transition">
+            Guardar en Nómina
+          </button>
+        </div>
+      </div>
+
+      <div class="flex-1">
+        <h3 class="text-xs font-bold text-slate-300 mb-2">📋 Personal Registrado</h3>
+        <div id="lista-empleados" class="space-y-2"></div>
+      </div>
     </div>
 
   </div>
 
   <script>
     let items = JSON.parse(localStorage.getItem('ina_rrhh_items')) || [];
-    let filtroActual = 'hoy';
+    let empleados = JSON.parse(localStorage.getItem('ina_rrhh_empleados')) || [];
+    let apiKey = localStorage.getItem('ina_gemini_api_key') || '';
+    let filtroActual = 'todas';
 
-    function cambiarPestana(pestana) {
-      if (pestana === 'chat') {
-        document.getElementById('vista-chat').classList.remove('hidden');
-        document.getElementById('vista-agenda').classList.add('hidden');
-        document.getElementById('btn-chat').className = "flex-1 py-3 text-xs font-bold border-b-2 border-purple-500 text-purple-300 bg-purple-950/20 transition";
-        document.getElementById('btn-agenda').className = "flex-1 py-3 text-xs font-bold text-slate-400 transition";
-      } else {
-        document.getElementById('vista-chat').classList.add('hidden');
-        document.getElementById('vista-agenda').classList.remove('hidden');
-        document.getElementById('btn-agenda').className = "flex-1 py-3 text-xs font-bold border-b-2 border-purple-500 text-purple-300 bg-purple-950/20 transition";
-        document.getElementById('btn-chat').className = "flex-1 py-3 text-xs font-bold text-slate-400 transition";
-        renderAgenda();
+    function configurarApiKey() {
+      const key = prompt('Pega tu API Key gratuita de Gemini:', apiKey);
+      if (key !== null) {
+        apiKey = key.trim();
+        localStorage.setItem('ina_gemini_api_key', apiKey);
+        alert('API Key guardada correctamente.');
       }
     }
 
-    function enviarMensaje() {
+    function cambiarPestana(pestana) {
+      document.getElementById('vista-chat').classList.add('hidden');
+      document.getElementById('vista-agenda').classList.add('hidden');
+      document.getElementById('vista-nomina').classList.add('hidden');
+      
+      document.getElementById('btn-chat').className = "flex-1 py-2.5 text-xs font-bold text-slate-400 transition";
+      document.getElementById('btn-agenda').className = "flex-1 py-2.5 text-xs font-bold text-slate-400 transition";
+      document.getElementById('btn-nomina').className = "flex-1 py-2.5 text-xs font-bold text-slate-400 transition";
+
+      if (pestana === 'chat') {
+        document.getElementById('vista-chat').classList.remove('hidden');
+        document.getElementById('btn-chat').className = "flex-1 py-2.5 text-xs font-bold border-b-2 border-purple-500 text-purple-300 bg-purple-950/20 transition";
+      } else if (pestana === 'agenda') {
+        document.getElementById('vista-agenda').classList.remove('hidden');
+        document.getElementById('btn-agenda').className = "flex-1 py-2.5 text-xs font-bold border-b-2 border-purple-500 text-purple-300 bg-purple-950/20 transition";
+        renderAgenda();
+      } else {
+        document.getElementById('vista-nomina').classList.remove('hidden');
+        document.getElementById('btn-nomina').className = "flex-1 py-2.5 text-xs font-bold border-b-2 border-purple-500 text-purple-300 bg-purple-950/20 transition";
+        renderNomina();
+      }
+    }
+
+    function guardarEmpleado() {
+      const nombre = document.getElementById('nom-nombre').value.trim();
+      const legajo = document.getElementById('nom-legajo').value.trim();
+      const puesto = document.getElementById('nom-puesto').value.trim();
+      const horarios = document.getElementById('nom-horarios').value.trim();
+      const variable = document.getElementById('nom-variable').value.trim();
+
+      if (!nombre) { alert('Ingresa al menos el nombre.'); return; }
+
+      const emp = { id: Date.now(), nombre, legajo, puesto, horarios, variable };
+      empleados.push(emp);
+      localStorage.setItem('ina_rrhh_empleados', JSON.stringify(empleados));
+      
+      document.getElementById('nom-nombre').value = '';
+      document.getElementById('nom-legajo').value = '';
+      document.getElementById('nom-puesto').value = '';
+      document.getElementById('nom-horarios').value = '';
+      document.getElementById('nom-variable').value = '';
+
+      renderNomina();
+    }
+
+    function renderNomina() {
+      const contenedor = document.getElementById('lista-empleados');
+      if (empleados.length === 0) {
+        contenedor.innerHTML = `<p class="text-slate-500 text-xs py-4 text-center">No hay personal cargado aún.</p>`;
+        return;
+      }
+      contenedor.innerHTML = empleados.map(e => `
+        <div class="bg-slate-800 p-2.5 rounded-xl border border-purple-900/30 flex justify-between items-start text-xs">
+          <div>
+            <p class="font-bold text-purple-300">${e.nombre} <span class="text-slate-400 font-normal">(${e.puesto || 'Sin Puesto'})</span></p>
+            <p class="text-[10px] text-slate-400">Legajo: ${e.legajo || 'S/D'} | Horario: ${e.horarios || 'S/D'}</p>
+            <p class="text-[10px] text-slate-300 mt-1">KPI: ${e.variable || 'Sin especificación'}</p>
+          </div>
+          <button onclick="eliminarEmpleado(${e.id})" class="text-red-400 text-xs">✕</button>
+        </div>
+      `).join('');
+    }
+
+    function eliminarEmpleado(id) {
+      empleados = empleados.filter(e => e.id !== id);
+      localStorage.setItem('ina_rrhh_empleados', JSON.stringify(empleados));
+      renderNomina();
+    }
+
+    async function enviarMensaje() {
       const input = document.getElementById('input-mensaje');
       const texto = input.value.trim();
       if (!texto) return;
@@ -116,7 +211,7 @@
       const contenedor = document.getElementById('contenedor-mensajes');
       contenedor.innerHTML += `
         <div class="flex justify-end">
-          <div class="max-w-[85%] bg-purple-700 text-white rounded-2xl rounded-br-none p-3 text-xs shadow-md">
+          <div class="max-w-[85%] bg-purple-700 text-white rounded-2xl rounded-br-none p-2.5 text-xs shadow-md">
             ${texto}
           </div>
         </div>
@@ -124,78 +219,122 @@
       input.value = '';
       contenedor.scrollTop = contenedor.scrollHeight;
 
-      setTimeout(() => {
-        let cat = 'Gestión de Desempeño';
-        let est = 'seguimiento';
-        let respuestaAI = '';
-        const lower = texto.toLowerCase();
-
-        // Lógica afinada para Desempeño, Conducta y Clima
-        if (lower.includes('demora') || lower.includes('no hizo') || lower.includes('enojo') || lower.includes('actitud') || lower.includes('comportamiento') || lower.includes('indicación') || lower.includes('orden')) {
-          cat = 'Gestión de Desempeño y Conducta';
-          est = 'seguimiento';
-          respuestaAI = `Incidencia de desempeño y cumplimiento de directivas registrada. Recomendación HR: Documentar el desvío operativo, evaluar impacto en procesos y pautar una breve retroalimentación correctiva con el colaborador.`;
-        } else if (lower.includes('llegó tarde') || lower.includes('tardanza') || lower.includes('falta') || lower.includes('ausente')) {
-          cat = 'Asistencia y Puntualidad';
-          est = 'hoy';
-          respuestaAI = `Control de asistencia registrado. Evaluar justificación formal según procedimiento interno.`;
-        } else if (lower.includes('accidente') || lower.includes('art') || lower.includes('medico') || lower.includes('enfermo')) {
-          cat = 'Salud y Seguridad Laboral';
-          est = 'pendientes';
-          respuestaAI = `Evento de salud ocupacional ingresado. Requerir certificado médico oficial o gestionar protocolo correspondiente.`;
-        } else if (lower.includes('sancion') || lower.includes('suspension') || lower.includes('conflicto grave')) {
-          cat = 'Relaciones Laborales';
-          est = 'pendientes';
-          respuestaAI = `Caso crítico de relaciones laborales. Respaldar con testimonios y descargo escrito antes de proceder disciplinariamente.`;
-        } else {
-          cat = 'Gestión de Desempeño';
-          est = 'hoy';
-          respuestaAI = `Registro ingresado en la bitácora de People Operations para seguimiento de desempeño.`;
-        }
-
-        const nuevoRegistro = { id: Date.now(), fecha: new Date().toLocaleDateString(), text: texto, categoria: cat, estado: est };
-        items.unshift(nuevoRegistro);
-        localStorage.setItem('ina_rrhh_items', JSON.stringify(items));
-
+      if (!apiKey) {
         contenedor.innerHTML += `
           <div class="flex justify-start">
-            <div class="max-w-[88%] bg-slate-800 border border-purple-500/30 text-slate-200 rounded-2xl rounded-bl-none p-3.5 text-xs shadow-lg leading-relaxed">
-              <span class="text-[10px] font-bold bg-purple-900/80 text-purple-300 px-2 py-0.5 rounded border border-purple-700/50 block w-max mb-1.5 uppercase">${cat}</span>
-              ${respuestaAI}
+            <div class="max-w-[90%] bg-slate-800 border border-red-500/40 text-red-300 rounded-2xl rounded-bl-none p-3 text-xs">
+              ⚠️ Falta configurar la API Key. Toca el botón 🔑 Key arriba y pégala para que INA procese tu nota.
             </div>
           </div>
         `;
         contenedor.scrollTop = contenedor.scrollHeight;
-      }, 500);
-    }
+        return;
+      }
 
-    function filtrarAgenda(estado) {
-      filtroActual = estado;
-      document.querySelectorAll('.filtro-btn').forEach(btn => {
-        btn.className = "filtro-btn px-3 py-1 rounded-lg text-[11px] font-bold bg-slate-800 text-slate-400 border border-purple-900/40";
-      });
-      document.getElementById(`f-${estado}`).className = "filtro-btn px-3 py-1 rounded-lg text-[11px] font-bold bg-purple-600 text-white shadow";
-      renderAgenda();
+      // Prompt para Gemini
+      const promptSistema = `Eres INA, la asistente Senior de RRHH y Operaciones de Planta. 
+Nómina actual de la empresa: ${JSON.stringify(empleados)}.
+El usuario te enviará notas o novedades en crudo de su día a día.
+Tu tarea es:
+1. Identificar si menciona a alguien de la nómina o una tarea operativa.
+2. Formular un análisis breve y un plan de acción estructurado con plazos (24h, 48h, esta semana).
+3. Determinar la Prioridad: "alta", "media" o "baja".
+4. Determinar un título resumido corto (máximo 6 palabras).
+
+Debes responder estrictamente en formato JSON con la siguiente estructura:
+{
+  "analisis": "Tu respuesta técnica de RRHH en texto amigable y directo",
+  "titulo": "Título muy corto",
+  "prioridad": "alta/media/baja",
+  "categoria": "Desempeño/Operativa/Asistencia/Mantenimiento"
+}`;
+
+      try {
+        const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            contents: [{ parts: [{ text: promptSistema + "\nNota del usuario: " + texto }] }]
+          })
+        });
+        const data = await res.json();
+        const rawText = data.candidates[0].content.parts[0].text;
+        const jsonMatch = rawText.match(/\{[\s\S]*\}/);
+        const parsed = JSON.parse(jsonMatch[0]);
+
+        const nuevoItem = {
+          id: Date.now(),
+          fecha: new Date().toLocaleDateString(),
+          texto: texto,
+          titulo: parsed.titulo,
+          prioridad: parsed.prioridad.toLowerCase(),
+          categoria: parsed.categoria,
+          analisis: parsed.analisis,
+          estado: 'pendiente'
+        };
+        items.unshift(nuevoItem);
+        localStorage.setItem('ina_rrhh_items', JSON.stringify(items));
+
+        contenedor.innerHTML += `
+          <div class="flex justify-start">
+            <div class="max-w-[90%] bg-slate-800 border border-purple-500/30 text-slate-200 rounded-2xl rounded-bl-none p-3 text-xs leading-relaxed shadow-lg">
+              <span class="text-[9px] font-bold bg-purple-900 text-purple-300 px-2 py-0.5 rounded border border-purple-700/50 block w-max mb-1 uppercase">${parsed.categoria} | Priority: ${parsed.prioridad}</span>
+              ${parsed.analisis}
+            </div>
+          </div>
+        `;
+      } catch (err) {
+        contenedor.innerHTML += `
+          <div class="flex justify-start">
+            <div class="max-w-[90%] bg-slate-800 border border-red-500/30 text-red-300 rounded-2xl rounded-bl-none p-3 text-xs">
+              Hubo un error al procesar con IA. Verifica tu API Key o conexión a internet.
+            </div>
+          </div>
+        `;
+      }
+      contenedor.scrollTop = contenedor.scrollHeight;
     }
 
     function renderAgenda() {
       const lista = document.getElementById('lista-agenda');
-      const filtrados = items.filter(i => i.estado === filtroActual);
-      
+      let filtrados = items;
+      if (filtroActual !== 'todas') {
+        filtrados = items.filter(i => i.prioridad === filtroActual);
+      }
+
       if (filtrados.length === 0) {
-        lista.innerHTML = `<p class="text-center text-slate-500 text-xs py-8">No hay registros pendientes en esta sección.</p>`;
+        lista.innerHTML = `<p class="text-center text-slate-500 text-xs py-8">No hay registros guardados en este filtro.</p>`;
         return;
       }
 
-      lista.innerHTML = filtrados.map(i => `
-        <div class="bg-slate-800/90 p-3 rounded-xl border border-purple-900/40 shadow flex flex-col gap-1.5">
-          <div class="flex items-center justify-between">
-            <span class="text-[9px] font-bold bg-purple-950 text-purple-300 px-2 py-0.5 rounded border border-purple-800/50">${i.categoria}</span>
-            <button onclick="eliminarItem(${i.id})" class="text-slate-500 hover:text-red-400 text-xs px-1">✕</button>
+      lista.innerHTML = filtrados.map(i => {
+        let badgeColor = "text-green-400 border-green-900/50 bg-green-950/40";
+        if (i.prioridad === 'alta') badgeColor = "text-red-400 border-red-900/50 bg-red-950/40";
+        if (i.prioridad === 'media') badgeColor = "text-yellow-400 border-yellow-900/50 bg-yellow-950/40";
+
+        return `
+          <div class="bg-slate-800/90 p-2.5 rounded-xl border border-purple-900/40 shadow flex flex-col gap-1 text-xs">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-1.5">
+                <span class="text-[9px] font-bold px-1.5 py-0.5 rounded border ${badgeColor} uppercase">${i.prioridad}</span>
+                <span class="font-bold text-slate-200">${i.titulo || i.categoria}</span>
+              </div>
+              <button onclick="eliminarItem(${i.id})" class="text-slate-500 hover:text-red-400 text-xs px-1">✕</button>
+            </div>
+            <p class="text-slate-300 text-[11px] leading-snug">${i.texto}</p>
+            <p class="text-[9px] text-purple-300/70 mt-0.5">📅 ${i.fecha} - ${i.categoria}</p>
           </div>
-          <p class="text-xs font-medium text-slate-200">${i.text}</p>
-        </div>
-      `).join('');
+        `;
+      }).join('');
+    }
+
+    function filtrarAgenda(prioridad) {
+      filtroActual = prioridad;
+      document.querySelectorAll('.filtro-btn').forEach(btn => {
+        btn.className = "filtro-btn px-2.5 py-1 rounded-lg text-[10px] font-bold bg-slate-800 text-slate-400 border border-purple-900/40";
+      });
+      document.getElementById(`f-${prioridad}`).className = "filtro-btn px-2.5 py-1 rounded-lg text-[10px] font-bold bg-purple-600 text-white shadow";
+      renderAgenda();
     }
 
     function eliminarItem(id) {
@@ -204,28 +343,61 @@
       renderAgenda();
     }
 
-    function limpiarTodo() {
-      if(confirm('¿Deseas vaciar todos los registros del tablero?')) {
-        items = [];
-        localStorage.removeItem('ina_rrhh_items');
-        renderAgenda();
+    async function generarReporteJefe() {
+      if (items.length === 0) {
+        alert('No hay registros guardados para generar el informe.');
+        return;
+      }
+      if (!apiKey) {
+        alert('Configura la API Key para generar el reporte ejecutivo.');
+        return;
+      }
+
+      alert('Generando resumen ejecutivo para tu jefe...');
+      const promptJefe = `Eres INA HR Pro. Genera un reporte ejecutivo breve de 3 bloques para presentarle al jefe en una reunión de 5 minutos:
+1. ¿Dónde estamos? (Estado general de la planta y nómina)
+2. ¿Qué hicimos? (Registros y novedades resueltas)
+3. ¿Qué falta / Pendientes críticos? (Acciones pendientes ordenadas por prioridad)
+
+Historial de notas del usuario: ${JSON.stringify(items)}`;
+
+      try {
+        const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            contents: [{ parts: [{ text: promptJefe }] }]
+          })
+        });
+        const data = await res.json();
+        const reporte = data.candidates[0].content.parts[0].text;
+        
+        cambiarPestana('chat');
+        const contenedor = document.getElementById('contenedor-mensajes');
+        contenedor.innerHTML += `
+          <div class="flex justify-start">
+            <div class="max-w-[95%] bg-indigo-950 border border-indigo-500/40 text-indigo-100 rounded-2xl p-3.5 text-xs leading-relaxed shadow-2xl">
+              <p class="font-bold text-indigo-300 text-sm mb-2 border-b border-indigo-800/60 pb-1">📊 REPORTE EJECUTIVO - REUNIÓN DE 5 MIN</p>
+              <div class="whitespace-pre-wrap">${reporte}</div>
+            </div>
+          </div>
+        `;
+        contenedor.scrollTop = contenedor.scrollHeight;
+      } catch (err) {
+        alert('Error al generar el reporte.');
       }
     }
 
     function exportarDatos() {
-      if (items.length === 0) {
-        alert("No hay registros cargados para exportar.");
-        return;
-      }
-      let contenido = "FECHA,CATEGORIA,ESTADO,DETALLE\n";
+      if (items.length === 0) { alert("No hay datos para exportar."); return; }
+      let csv = "FECHA,PRIORIDAD,CATEGORIA,TITULO,NOTA\n";
       items.forEach(i => {
-        contenido += `"${i.fecha || ''}","${i.categoria}","${i.estado}","${i.text.replace(/"/g, '""')}"\n`;
+        csv += `"${i.fecha}","${i.prioridad}","${i.categoria}","${(i.titulo||'').replace(/"/g, '""')}","${i.texto.replace(/"/g, '""')}"\n`;
       });
-      const blob = new Blob([contenido], { type: 'text/csv;charset=utf-8;' });
-      const url = URL.createObjectURL(blob);
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
       const a = document.createElement('a');
-      a.href = url;
-      a.download = `INA_RRHH_Backup_${new Date().toISOString().slice(0,10)}.csv`;
+      a.href = URL.createObjectURL(blob);
+      a.download = `INA_Backup_${new Date().toISOString().slice(0,10)}.csv`;
       a.click();
     }
   </script>
