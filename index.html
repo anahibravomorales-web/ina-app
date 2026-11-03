@@ -3,92 +3,94 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>INA - Tu Asistente Personal</title>
-  <!-- Tailwind CSS para un diseño moderno -->
+  <title>INA - RRHH Senior Partner</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-100 h-screen w-screen flex flex-col justify-center items-center m-0 p-0 overflow-hidden">
+<body class="bg-slate-950 h-screen w-screen flex flex-col justify-center items-center m-0 p-0 overflow-hidden font-sans text-slate-100">
 
-  <div class="w-full max-w-md h-full sm:h-[92vh] bg-white sm:rounded-2xl shadow-2xl flex flex-col overflow-hidden">
+  <div class="w-full max-w-md h-full sm:h-[94vh] bg-slate-900 sm:rounded-3xl shadow-2xl flex flex-col overflow-hidden border border-purple-900/40">
     
-    <!-- Encabezado -->
-    <header class="bg-emerald-600 text-white p-4 flex items-center gap-3 shadow-md select-none">
-      <div class="w-10 h-10 rounded-full bg-emerald-800 flex items-center justify-center font-bold text-lg border-2 border-emerald-300">
-        INA
+    <!-- Encabezado RRHH Pro Max -->
+    <header class="bg-gradient-to-r from-purple-950 via-purple-900 to-indigo-950 text-white p-4 flex items-center justify-between border-b border-purple-800/50 shadow-lg select-none">
+      <div class="flex items-center gap-3">
+        <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-purple-600 to-indigo-500 flex items-center justify-center font-black text-xl shadow-md border border-purple-300/30">
+          INA
+        </div>
+        <div>
+          <div class="flex items-center gap-1.5">
+            <h1 class="font-bold text-base leading-tight tracking-wide">INA</h1>
+            <span class="bg-purple-500/20 text-purple-300 text-[10px] font-semibold px-2 py-0.5 rounded-full border border-purple-500/30">HR Senior</span>
+          </div>
+          <p class="text-[11px] text-purple-300/80">People & Culture Strategic Partner</p>
+        </div>
       </div>
-      <div>
-        <h1 class="font-bold text-lg leading-tight">INA</h1>
-        <p class="text-xs text-emerald-100">Tu Asistente Personal</p>
-      </div>
+      <button onclick="limpiarTodo()" class="text-xs text-purple-300/60 hover:text-purple-200 bg-purple-900/30 px-2.5 py-1 rounded-lg border border-purple-800/40 transition">
+        Vaciar
+      </button>
     </header>
 
-    <!-- Pestañas de Navegación -->
-    <div class="flex border-b bg-gray-50 select-none">
-      <button onclick="cambiarPestana('chat')" id="btn-chat" class="flex-1 py-3 text-sm font-bold border-b-2 border-emerald-600 text-emerald-600 bg-white transition">
-        💬 Chat
+    <!-- Navegación -->
+    <div class="flex border-b border-purple-900/40 bg-slate-950/60 select-none">
+      <button onclick="cambiarPestana('chat')" id="btn-chat" class="flex-1 py-3 text-xs font-bold border-b-2 border-purple-500 text-purple-300 bg-purple-950/20 transition">
+        💬 Chat de Consultas
       </button>
-      <button onclick="cambiarPestana('agenda')" id="btn-agenda" class="flex-1 py-3 text-sm font-bold text-gray-500 transition">
-        📋 Agenda
+      <button onclick="cambiarPestana('agenda')" id="btn-agenda" class="flex-1 py-3 text-xs font-bold text-slate-400 hover:text-slate-200 transition">
+        📋 Tablero de Gestión
       </button>
     </div>
 
-    <!-- VISTA 1: CHAT -->
-    <div id="vista-chat" class="flex-1 flex flex-col justify-between overflow-hidden bg-slate-50">
-      <div id="contenedor-mensajes" class="flex-1 overflow-y-auto p-4 space-y-3">
+    <!-- VISTA CHAT -->
+    <div id="vista-chat" class="flex-1 flex flex-col justify-between overflow-hidden bg-slate-900/80">
+      <div id="contenedor-mensajes" class="flex-1 overflow-y-auto p-4 space-y-4">
         <div class="flex justify-start">
-          <div class="max-w-[85%] bg-white text-gray-800 border rounded-2xl rounded-bl-none px-4 py-3 text-sm shadow-sm">
-            ¡Hola! Soy <b>INA</b>, tu asistente personal. Escribime aquí tus novedades, tareas u observaciones como si me hablaras por WhatsApp.
+          <div class="max-w-[88%] bg-slate-800/90 border border-purple-500/20 rounded-2xl rounded-bl-none p-3.5 text-xs text-slate-200 shadow-lg leading-relaxed">
+            <p class="font-semibold text-purple-300 mb-1">💼 Asistente Senior de RRHH activa.</p>
+            Hola. Estoy lista para gestionar incidencias, ausentismo, desempeño, relaciones laborales o novedades de legajo. ¿Qué reporte o situación registramos hoy?
           </div>
         </div>
       </div>
-      <div class="p-3 bg-white border-t flex gap-2 items-center">
+      
+      <div class="p-3 bg-slate-950 border-t border-purple-900/40 flex gap-2 items-center">
         <input 
           type="text" 
           id="input-mensaje" 
-          placeholder="Escribile a INA..." 
+          placeholder="Escribe la novedad o consulta de RRHH..." 
           onkeydown="if(event.key === 'Enter') enviarMensaje()"
-          class="flex-1 border border-gray-300 rounded-full px-4 py-2.5 text-sm outline-none focus:border-emerald-600"
+          class="flex-1 bg-slate-900 border border-purple-900/60 rounded-xl px-4 py-2.5 text-xs text-slate-100 outline-none focus:border-purple-500 transition placeholder-slate-500"
         />
-        <button onclick="enviarMensaje()" class="bg-emerald-600 text-white rounded-full w-10 h-10 flex items-center justify-center font-bold hover:bg-emerald-700 transition shadow">
+        <button onclick="enviarMensaje()" class="bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white rounded-xl w-10 h-10 flex items-center justify-center font-bold shadow-lg transition">
           ➔
         </button>
       </div>
     </div>
 
-    <!-- VISTA 2: AGENDA -->
-    <div id="vista-agenda" class="flex-1 p-3 flex flex-col overflow-hidden bg-gray-50 hidden">
-      <div class="flex gap-2 overflow-x-auto pb-2 shrink-0">
-        <button onclick="filtrarAgenda('hoy')" id="f-hoy" class="filtro-btn px-3 py-1 rounded-full text-xs font-bold bg-emerald-600 text-white shadow-sm">Hoy</button>
-        <button onclick="filtrarAgenda('pendientes')" id="f-pendientes" class="filtro-btn px-3 py-1 rounded-full text-xs font-bold bg-white text-gray-600 border">Pendientes</button>
-        <button onclick="filtrarAgenda('seguimiento')" id="f-seguimiento" class="filtro-btn px-3 py-1 rounded-full text-xs font-bold bg-white text-gray-600 border">Seguimiento</button>
+    <!-- VISTA TABLERO -->
+    <div id="vista-agenda" class="flex-1 p-3 flex flex-col overflow-hidden bg-slate-900/80 hidden">
+      <div class="flex gap-1.5 overflow-x-auto pb-2 shrink-0">
+        <button onclick="filtrarAgenda('hoy')" id="f-hoy" class="filtro-btn px-3 py-1 rounded-lg text-[11px] font-bold bg-purple-600 text-white shadow">Hoy</button>
+        <button onclick="filtrarAgenda('pendientes')" id="f-pendientes" class="filtro-btn px-3 py-1 rounded-lg text-[11px] font-bold bg-slate-800 text-slate-400 border border-purple-900/40">Pendientes</button>
+        <button onclick="filtrarAgenda('seguimiento')" id="f-seguimiento" class="filtro-btn px-3 py-1 rounded-lg text-[11px] font-bold bg-slate-800 text-slate-400 border border-purple-900/40">Seguimiento</button>
       </div>
-      <div id="lista-agenda" class="flex-1 overflow-y-auto space-y-2 mt-2 pr-1">
-        <!-- Elementos de la agenda -->
-      </div>
+      <div id="lista-agenda" class="flex-1 overflow-y-auto space-y-2 mt-2 pr-1"></div>
     </div>
 
   </div>
 
   <script>
-    let items = JSON.parse(localStorage.getItem('ina_items')) || [
-      { text: 'Liquidación: Juan Pérez llegó tarde', categoria: 'Novedad', estado: 'hoy' },
-      { text: 'Desempeño: observar a Facundo', categoria: 'Observación', estado: 'seguimiento' },
-      { text: 'Falta realizar denuncia por accidente de Luis', categoria: 'Problema', estado: 'pendientes' }
-    ];
-
+    let items = JSON.parse(localStorage.getItem('ina_rrhh_items')) || [];
     let filtroActual = 'hoy';
 
     function cambiarPestana(pestana) {
       if (pestana === 'chat') {
         document.getElementById('vista-chat').classList.remove('hidden');
         document.getElementById('vista-agenda').classList.add('hidden');
-        document.getElementById('btn-chat').className = "flex-1 py-3 text-sm font-bold border-b-2 border-emerald-600 text-emerald-600 bg-white transition";
-        document.getElementById('btn-agenda').className = "flex-1 py-3 text-sm font-bold text-gray-500 transition";
+        document.getElementById('btn-chat').className = "flex-1 py-3 text-xs font-bold border-b-2 border-purple-500 text-purple-300 bg-purple-950/20 transition";
+        document.getElementById('btn-agenda').className = "flex-1 py-3 text-xs font-bold text-slate-400 transition";
       } else {
         document.getElementById('vista-chat').classList.add('hidden');
         document.getElementById('vista-agenda').classList.remove('hidden');
-        document.getElementById('btn-agenda').className = "flex-1 py-3 text-sm font-bold border-b-2 border-emerald-600 text-emerald-600 bg-white transition";
-        document.getElementById('btn-chat').className = "flex-1 py-3 text-sm font-bold text-gray-500 transition";
+        document.getElementById('btn-agenda').className = "flex-1 py-3 text-xs font-bold border-b-2 border-purple-500 text-purple-300 bg-purple-950/20 transition";
+        document.getElementById('btn-chat').className = "flex-1 py-3 text-xs font-bold text-slate-400 transition";
         renderAgenda();
       }
     }
@@ -99,10 +101,9 @@
       if (!texto) return;
 
       const contenedor = document.getElementById('contenedor-mensajes');
-      
       contenedor.innerHTML += `
         <div class="flex justify-end">
-          <div class="max-w-[85%] bg-emerald-600 text-white rounded-2xl rounded-br-none px-4 py-2.5 text-sm shadow-sm">
+          <div class="max-w-[85%] bg-purple-700 text-white rounded-2xl rounded-br-none p-3 text-xs shadow-md">
             ${texto}
           </div>
         </div>
@@ -111,38 +112,54 @@
       contenedor.scrollTop = contenedor.scrollHeight;
 
       setTimeout(() => {
-        let cat = 'Novedad';
+        let cat = 'Novedad de Legajo';
         let est = 'hoy';
+        let respuestaAI = '';
         const lower = texto.toLowerCase();
 
-        if (lower.includes('comprar') || lower.includes('tengo que') || lower.includes('falta')) {
-          cat = 'Tarea'; est = 'pendientes';
-        } else if (lower.includes('observar') || lower.includes('dificultad')) {
-          cat = 'Observación'; est = 'seguimiento';
-        } else if (lower.includes('accidente') || lower.includes('problema')) {
-          cat = 'Problema'; est = 'pendientes';
+        if (lower.includes('llegó tarde') || lower.includes('tardanza') || lower.includes('falta') || lower.includes('ausente')) {
+          cat = 'Asistencia y Puntualidad';
+          est = 'hoy';
+          respuestaAI = `Registrada novedad de control de asistencia. Recomendación HR: Verificar si justifica ausentismo/tardanza o si corresponde apercibimiento formal según reglamento interno.`;
+        } else if (lower.includes('accidente') || lower.includes('art') || lower.includes('medico') || lower.includes('enfermo')) {
+          cat = 'Salud y Seguridad Laboral';
+          est = 'pendientes';
+          respuestaAI = `Atención requerida. Notificación ingresada en Salud Ocupacional. No olvides solicitar el certificado médico original o iniciar denuncia formal a la ART si corresponde.`;
+        } else if (lower.includes('observar') || lower.includes('desempeño') || lower.includes('actitud') || lower.includes('rendimiento')) {
+          cat = 'Evaluación de Desempeño';
+          est = 'seguimiento';
+          respuestaAI = `Asignado a seguimiento de desarrollo. Te sugiero agendar una sesión de Feedback 1 a 1 para alinear expectativas de desempeño.`;
+        } else if (lower.includes('sancion') || lower.includes('suspension') || lower.includes('discusión') || lower.includes('conflicto')) {
+          cat = 'Relaciones Laborales';
+          est = 'pendientes';
+          respuestaAI = `Incidencia de clima/disciplina documentada. Asegúrate de respaldar el hecho con firma de testigos o descargos por escrito antes de definir medida disciplinaria.`;
+        } else {
+          cat = 'Gestión General de Talentos';
+          est = 'hoy';
+          respuestaAI = `Registrado correctamente en la base de People Operations. Quedó categorizado para tu revisión estratégica.`;
         }
 
-        items.unshift({ text: texto, categoria: cat, estado: est });
-        localStorage.setItem('ina_items', JSON.stringify(items));
+        items.unshift({ id: Date.now(), text: texto, categoria: cat, estado: est });
+        localStorage.setItem('ina_rrhh_items', JSON.stringify(items));
 
         contenedor.innerHTML += `
           <div class="flex justify-start">
-            <div class="max-w-[85%] bg-white text-gray-800 border rounded-2xl rounded-bl-none px-4 py-2.5 text-sm shadow-sm">
-              Anotado como <b>${cat}</b>. Quedó guardado en la sección <b>${est.toUpperCase()}</b>.
+            <div class="max-w-[88%] bg-slate-800 border border-purple-500/30 text-slate-200 rounded-2xl rounded-bl-none p-3.5 text-xs shadow-lg leading-relaxed">
+              <span class="text-[10px] font-bold bg-purple-900/80 text-purple-300 px-2 py-0.5 rounded border border-purple-700/50 block w-max mb-1.5 uppercase">${cat}</span>
+              ${respuestaAI}
             </div>
           </div>
         `;
         contenedor.scrollTop = contenedor.scrollHeight;
-      }, 400);
+      }, 500);
     }
 
     function filtrarAgenda(estado) {
       filtroActual = estado;
       document.querySelectorAll('.filtro-btn').forEach(btn => {
-        btn.className = "filtro-btn px-3 py-1 rounded-full text-xs font-bold bg-white text-gray-600 border";
+        btn.className = "filtro-btn px-3 py-1 rounded-lg text-[11px] font-bold bg-slate-800 text-slate-400 border border-purple-900/40";
       });
-      document.getElementById(`f-${estado}`).className = "filtro-btn px-3 py-1 rounded-full text-xs font-bold bg-emerald-600 text-white shadow-sm";
+      document.getElementById(`f-${estado}`).className = "filtro-btn px-3 py-1 rounded-lg text-[11px] font-bold bg-purple-600 text-white shadow";
       renderAgenda();
     }
 
@@ -151,16 +168,33 @@
       const filtrados = items.filter(i => i.estado === filtroActual);
       
       if (filtrados.length === 0) {
-        lista.innerHTML = `<p class="text-center text-gray-400 text-sm py-8">Sin registros en esta sección.</p>`;
+        lista.innerHTML = `<p class="text-center text-slate-500 text-xs py-8">No hay registros pendientes en esta sección.</p>`;
         return;
       }
 
       lista.innerHTML = filtrados.map(i => `
-        <div class="bg-white p-3 rounded-lg border border-gray-200 shadow-sm flex flex-col gap-1">
-          <span class="text-[10px] font-bold bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded w-max">${i.categoria}</span>
-          <p class="text-sm font-medium text-gray-800">${i.text}</p>
+        <div class="bg-slate-800/90 p-3 rounded-xl border border-purple-900/40 shadow flex flex-col gap-1.5">
+          <div class="flex items-center justify-between">
+            <span class="text-[9px] font-bold bg-purple-950 text-purple-300 px-2 py-0.5 rounded border border-purple-800/50">${i.categoria}</span>
+            <button onclick="eliminarItem(${i.id})" class="text-slate-500 hover:text-red-400 text-xs px-1">✕</button>
+          </div>
+          <p class="text-xs font-medium text-slate-200">${i.text}</p>
         </div>
       `).join('');
+    }
+
+    function eliminarItem(id) {
+      items = items.filter(i => i.id !== id);
+      localStorage.setItem('ina_rrhh_items', JSON.stringify(items));
+      renderAgenda();
+    }
+
+    function limpiarTodo() {
+      if(confirm('¿Deseas vaciar todos los registros del tablero?')) {
+        items = [];
+        localStorage.removeItem('ina_rrhh_items');
+        renderAgenda();
+      }
     }
   </script>
 </body>
