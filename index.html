@@ -4,14 +4,24 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>INA - RRHH Senior Partner</title>
+  
+  <!-- Configuración PWA para Instalación en Celular -->
+  <meta name="theme-color" content="#3b0764">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="INA RRHH">
+  <link rel="manifest" href='data:application/manifest+json,{"name":"INA RRHH Senior","short_name":"INA","start_url":".","display":"standalone","background_color":"#020617","theme_color":"#3b0764","icons":[{"src":"https://cdn-icons-png.flaticon.com/512/3135/3135715.png","sizes":"512x512","type":"image/png"}]}'>
+
+  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-slate-950 h-screen w-screen flex flex-col justify-center items-center m-0 p-0 overflow-hidden font-sans text-slate-100">
+<body class="bg-slate-950 h-screen w-screen flex flex-col justify-center items-center m-0 p-0 overflow-hidden font-sans text-slate-100 select-none">
 
   <div class="w-full max-w-md h-full sm:h-[94vh] bg-slate-900 sm:rounded-3xl shadow-2xl flex flex-col overflow-hidden border border-purple-900/40">
     
     <!-- Encabezado RRHH Pro Max -->
-    <header class="bg-gradient-to-r from-purple-950 via-purple-900 to-indigo-950 text-white p-4 flex items-center justify-between border-b border-purple-800/50 shadow-lg select-none">
+    <header class="bg-gradient-to-r from-purple-950 via-purple-900 to-indigo-950 text-white p-4 flex items-center justify-between border-b border-purple-800/50 shadow-lg">
       <div class="flex items-center gap-3">
         <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-purple-600 to-indigo-500 flex items-center justify-center font-black text-xl shadow-md border border-purple-300/30">
           INA
@@ -19,18 +29,23 @@
         <div>
           <div class="flex items-center gap-1.5">
             <h1 class="font-bold text-base leading-tight tracking-wide">INA</h1>
-            <span class="bg-purple-500/20 text-purple-300 text-[10px] font-semibold px-2 py-0.5 rounded-full border border-purple-500/30">HR Senior</span>
+            <span class="bg-purple-500/20 text-purple-300 text-[10px] font-semibold px-2 py-0.5 rounded-full border border-purple-500/30">HR Senior Pro</span>
           </div>
           <p class="text-[11px] text-purple-300/80">People & Culture Strategic Partner</p>
         </div>
       </div>
-      <button onclick="limpiarTodo()" class="text-xs text-purple-300/60 hover:text-purple-200 bg-purple-900/30 px-2.5 py-1 rounded-lg border border-purple-800/40 transition">
-        Vaciar
-      </button>
+      <div class="flex gap-1.5">
+        <button onclick="exportarDatos()" title="Descargar Copia de Seguridad" class="text-xs bg-purple-800/40 hover:bg-purple-700/60 text-purple-200 px-2.5 py-1.5 rounded-xl border border-purple-700/50 flex items-center gap-1 transition">
+          📥 Backup
+        </button>
+        <button onclick="limpiarTodo()" title="Vaciar Registros" class="text-xs bg-red-950/40 hover:bg-red-900/60 text-red-300 px-2 py-1.5 rounded-xl border border-red-800/40 transition">
+          🗑️
+        </button>
+      </div>
     </header>
 
-    <!-- Navegación -->
-    <div class="flex border-b border-purple-900/40 bg-slate-950/60 select-none">
+    <!-- Pestañas de Navegación -->
+    <div class="flex border-b border-purple-900/40 bg-slate-950/60">
       <button onclick="cambiarPestana('chat')" id="btn-chat" class="flex-1 py-3 text-xs font-bold border-b-2 border-purple-500 text-purple-300 bg-purple-950/20 transition">
         💬 Chat de Consultas
       </button>
@@ -139,7 +154,8 @@
           respuestaAI = `Registrado correctamente en la base de People Operations. Quedó categorizado para tu revisión estratégica.`;
         }
 
-        items.unshift({ id: Date.now(), text: texto, categoria: cat, estado: est });
+        const nuevoRegistro = { id: Date.now(), fecha: new Date().toLocaleDateString(), text: texto, categoria: cat, estado: est };
+        items.unshift(nuevoRegistro);
         localStorage.setItem('ina_rrhh_items', JSON.stringify(items));
 
         contenedor.innerHTML += `
@@ -195,6 +211,23 @@
         localStorage.removeItem('ina_rrhh_items');
         renderAgenda();
       }
+    }
+
+    function exportarDatos() {
+      if (items.length === 0) {
+        alert("No hay registros cargados para exportar.");
+        return;
+      }
+      let contenido = "FECHA,CATEGORIA,ESTADO,DETALLE\n";
+      items.forEach(i => {
+        contenido += `"${i.fecha || ''}","${i.categoria}","${i.estado}","${i.text.replace(/"/g, '""')}"\n`;
+      });
+      const blob = new Blob([contenido], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `INA_RRHH_Backup_${new Date().toISOString().slice(0,10)}.csv`;
+      a.click();
     }
   </script>
 </body>
