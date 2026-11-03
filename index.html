@@ -58,7 +58,7 @@
         <div class="flex justify-start">
           <div class="max-w-[88%] bg-slate-800/90 border border-purple-500/20 rounded-2xl rounded-bl-none p-3.5 text-xs text-slate-200 shadow-lg leading-relaxed">
             <p class="font-semibold text-purple-300 mb-1">💼 Asistente Senior de RRHH activa.</p>
-            Hola. Estoy lista para gestionar incidencias, ausentismo, desempeño, relaciones laborales o novedades de legajo. ¿Qué reporte o situación registramos hoy?
+            Hola. He ajustado los filtros de análisis para enfocarme rigurosamente en Gestión de Desempeño, Clima y Conducta. ¿Qué caso o incidencia registramos ahora?
           </div>
         </div>
       </div>
@@ -67,7 +67,7 @@
         <input 
           type="text" 
           id="input-mensaje" 
-          placeholder="Escribe la novedad o consulta de RRHH..." 
+          placeholder="Escribe la novedad o incidencia de desempeño..." 
           onkeydown="if(event.key === 'Enter') enviarMensaje()"
           class="flex-1 bg-slate-900 border border-purple-900/60 rounded-xl px-4 py-2.5 text-xs text-slate-100 outline-none focus:border-purple-500 transition placeholder-slate-500"
         />
@@ -125,31 +125,32 @@
       contenedor.scrollTop = contenedor.scrollHeight;
 
       setTimeout(() => {
-        let cat = 'Novedad de Legajo';
-        let est = 'hoy';
+        let cat = 'Gestión de Desempeño';
+        let est = 'seguimiento';
         let respuestaAI = '';
         const lower = texto.toLowerCase();
 
-        if (lower.includes('llegó tarde') || lower.includes('tardanza') || lower.includes('falta') || lower.includes('ausente')) {
+        // Lógica afinada para Desempeño, Conducta y Clima
+        if (lower.includes('demora') || lower.includes('no hizo') || lower.includes('enojo') || lower.includes('actitud') || lower.includes('comportamiento') || lower.includes('indicación') || lower.includes('orden')) {
+          cat = 'Gestión de Desempeño y Conducta';
+          est = 'seguimiento';
+          respuestaAI = `Incidencia de desempeño y cumplimiento de directivas registrada. Recomendación HR: Documentar el desvío operativo, evaluar impacto en procesos y pautar una breve retroalimentación correctiva con el colaborador.`;
+        } else if (lower.includes('llegó tarde') || lower.includes('tardanza') || lower.includes('falta') || lower.includes('ausente')) {
           cat = 'Asistencia y Puntualidad';
           est = 'hoy';
-          respuestaAI = `Registrada novedad de control de asistencia. Recomendación HR: Verificar si justifica ausentismo/tardanza o si corresponde apercibimiento formal según reglamento interno.`;
+          respuestaAI = `Control de asistencia registrado. Evaluar justificación formal según procedimiento interno.`;
         } else if (lower.includes('accidente') || lower.includes('art') || lower.includes('medico') || lower.includes('enfermo')) {
           cat = 'Salud y Seguridad Laboral';
           est = 'pendientes';
-          respuestaAI = `Atención requerida. Notificación ingresada en Salud Ocupacional. No olvides solicitar el certificado médico original o iniciar denuncia formal a la ART si corresponde.`;
-        } else if (lower.includes('observar') || lower.includes('desempeño') || lower.includes('actitud') || lower.includes('rendimiento')) {
-          cat = 'Evaluación de Desempeño';
-          est = 'seguimiento';
-          respuestaAI = `Asignado a seguimiento de desarrollo. Te sugiero agendar una sesión de Feedback 1 a 1 para alinear expectativas de desempeño.`;
-        } else if (lower.includes('sancion') || lower.includes('suspension') || lower.includes('discusión') || lower.includes('conflicto')) {
+          respuestaAI = `Evento de salud ocupacional ingresado. Requerir certificado médico oficial o gestionar protocolo correspondiente.`;
+        } else if (lower.includes('sancion') || lower.includes('suspension') || lower.includes('conflicto grave')) {
           cat = 'Relaciones Laborales';
           est = 'pendientes';
-          respuestaAI = `Incidencia de clima/disciplina documentada. Asegúrate de respaldar el hecho con firma de testigos o descargos por escrito antes de definir medida disciplinaria.`;
+          respuestaAI = `Caso crítico de relaciones laborales. Respaldar con testimonios y descargo escrito antes de proceder disciplinariamente.`;
         } else {
-          cat = 'Gestión General de Talentos';
+          cat = 'Gestión de Desempeño';
           est = 'hoy';
-          respuestaAI = `Registrado correctamente en la base de People Operations. Quedó categorizado para tu revisión estratégica.`;
+          respuestaAI = `Registro ingresado en la bitácora de People Operations para seguimiento de desempeño.`;
         }
 
         const nuevoRegistro = { id: Date.now(), fecha: new Date().toLocaleDateString(), text: texto, categoria: cat, estado: est };
