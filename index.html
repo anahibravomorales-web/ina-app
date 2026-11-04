@@ -17,14 +17,14 @@
       </div>
       <div>
         <h1 class="font-bold text-xs leading-tight">INA HR Pro</h1>
-        <p class="text-[9px] text-purple-300/80">People Operations</p>
+        <p class="text-[9px] text-purple-300/80">Operaciones de personal</p>
       </div>
     </div>
     <div class="flex gap-1.5">
-      <button onclick="alternarModalKey()" class="text-[10px] font-bold bg-purple-800/60 hover:bg-purple-700 text-purple-200 px-2 py-1 rounded-lg border border-purple-600/40">
-        🔑 Key
+      <button onclick="alternarModalKey()" class="text-[10px] font-bold bg-purple-800/60 hover:bg-purple-700 text-purple-200 px-2.5 py-1 rounded-lg border border-purple-600/40">
+        🔑 Clave
       </button>
-      <button onclick="generarReporteJefe()" class="text-[10px] font-bold bg-indigo-800/60 hover:bg-indigo-700 text-indigo-200 px-2 py-1 rounded-lg border border-indigo-600/40">
+      <button onclick="generarReporteJefe()" class="text-[10px] font-bold bg-indigo-800/60 hover:bg-indigo-700 text-indigo-200 px-2.5 py-1 rounded-lg border border-indigo-600/40">
         📊 Jefe
       </button>
     </div>
@@ -34,8 +34,8 @@
   <div id="modal-key" class="hidden bg-slate-900 border-b border-purple-500/40 p-2.5 flex flex-col gap-2 shrink-0">
     <p class="text-xs text-purple-300 font-bold">🔑 Configurar tu API Key de Gemini:</p>
     <div class="flex gap-2">
-      <input type="password" id="input-key" placeholder="Pega tu clave AI Studio aquí..." class="flex-1 bg-slate-950 border border-purple-800 rounded-lg px-2.5 py-1 text-xs text-slate-100 outline-none focus:border-purple-500">
-      <button onclick="guardarKey()" class="bg-purple-600 text-white text-xs px-3 py-1 rounded-lg font-bold">Guardar</button>
+      <input type="password" id="input-key" placeholder="Pega tu clave AI Studio aquí..." class="flex-1 bg-slate-950 border border-purple-800 rounded-lg px-2.5 py-1.5 text-xs text-slate-100 outline-none focus:border-purple-500">
+      <button onclick="guardarKey()" class="bg-purple-600 text-white text-xs px-3 py-1.5 rounded-lg font-bold">Guardar</button>
     </div>
   </div>
 
@@ -53,7 +53,7 @@
   </div>
 
   <!-- VISTA CHAT -->
-  <div id="vista-chat" class="flex-1 flex flex-col min-h-0 bg-slate-900/80 overflow-hidden">
+  <div id="vista-chat" class="flex-1 flex flex-col min-h-0 bg-slate-900/80 overflow-hidden relative pb-12">
     <div id="contenedor-mensajes" class="flex-1 overflow-y-auto p-3 space-y-2.5">
       <div class="flex justify-start">
         <div class="max-w-[92%] bg-slate-800/90 border border-purple-500/20 rounded-2xl rounded-bl-none p-3 text-xs text-slate-200 shadow-lg leading-relaxed">
@@ -63,8 +63,8 @@
       </div>
     </div>
     
-    <!-- BARRA DE ENTRADA FIJA ABAJO (Garantizada a la vista) -->
-    <div class="p-2 bg-slate-950 border-t border-purple-900/40 flex gap-2 items-center shrink-0">
+    <!-- BARRA DE ENTRADA ABSOLUTA ARRIBA DEL BORDE INFERIOR -->
+    <div class="absolute bottom-0 left-0 right-0 p-2.5 bg-slate-950 border-t border-purple-900/50 flex gap-2 items-center z-20 shadow-2xl">
       <input 
         type="text" 
         id="input-mensaje" 
@@ -72,7 +72,7 @@
         onkeydown="if(event.key === 'Enter') enviarMensaje()"
         class="flex-1 bg-slate-900 border border-purple-900/60 rounded-xl px-3 py-2 text-xs text-slate-100 outline-none focus:border-purple-500 placeholder-slate-500"
       />
-      <button onclick="enviarMensaje()" class="bg-purple-600 hover:bg-purple-500 text-white rounded-xl px-3.5 py-2 font-bold shadow-lg text-xs shrink-0">
+      <button onclick="enviarMensaje()" class="bg-purple-600 hover:bg-purple-500 text-white rounded-xl px-4 py-2 font-bold shadow-lg text-xs shrink-0">
         Enviar
       </button>
     </div>
@@ -86,7 +86,7 @@
       <button onclick="filtrarAgenda('media')" id="f-media" class="filtro-btn px-2.5 py-1 rounded-lg text-[10px] font-bold bg-slate-800 text-yellow-400 border border-yellow-900/40">🟡 Media</button>
       <button onclick="filtrarAgenda('baja')" id="f-baja" class="filtro-btn px-2.5 py-1 rounded-lg text-[10px] font-bold bg-slate-800 text-green-400 border border-green-900/40">🟢 Baja</button>
     </div>
-    <div id="lista-agenda" class="flex-1 overflow-y-auto space-y-2 mt-2 pr-1"></div>
+    <div id="lista-agenda" class="flex-1 overflow-y-auto space-y-2 mt-2 pr-1 pb-10"></div>
   </div>
 
   <!-- VISTA NÓMINA -->
@@ -107,9 +107,9 @@
       </div>
     </div>
 
-    <div class="flex-1 overflow-y-auto">
+    <div class="flex-1 overflow-y-auto pb-10">
       <h3 class="text-xs font-bold text-slate-300 mb-1.5">📋 Personal Registrado</h3>
-      <div id="lista-empleados" class="space-y-2 pb-4"></div>
+      <div id="lista-empleados" class="space-y-2"></div>
     </div>
   </div>
 
@@ -130,7 +130,7 @@
     function guardarKey() {
       apiKey = document.getElementById('input-key').value.trim();
       localStorage.setItem('ina_gemini_api_key', apiKey);
-      alert('🔑 Key guardada correctamente.');
+      alert('🔑 Clave guardada correctamente.');
       alternarModalKey();
     }
 
@@ -223,7 +223,7 @@
         contenedor.innerHTML += `
           <div class="flex justify-start">
             <div class="max-w-[90%] bg-slate-800 border border-red-500/40 text-red-300 rounded-2xl rounded-bl-none p-3 text-xs">
-              ⚠️ Falta la Key. Toca el botón 🔑 Key arriba y pégala para responder.
+              ⚠️ Falta la Clave. Toca el botón 🔑 Clave arriba y pégala para responder.
             </div>
           </div>
         `;
@@ -332,7 +332,7 @@ Procesa la novedad del usuario y responde estrictamente en JSON:
 
     async function generarReporteJefe() {
       if (items.length === 0) { alert('No hay registros.'); return; }
-      if (!apiKey) { alert('Configura la Key primero.'); return; }
+      if (!apiKey) { alert('Configura la Clave primero.'); return; }
 
       alert('Generando reporte...');
       const promptJefe = `Genera un reporte de 3 bloques para una reunión de 5 minutos con el jefe:
