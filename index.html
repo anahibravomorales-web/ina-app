@@ -271,6 +271,7 @@ Procesa la novedad del usuario y responde estrictamente en formato JSON válido 
   "categoria": "Desempeño"
 }`;
 
+        // Uso correcto del SDK oficial con gemini-2.5-flash
         const response = await ai.models.generateContent({
           model: 'gemini-2.5-flash',
           contents: promptSistema + "\nNota de usuario: " + texto,
