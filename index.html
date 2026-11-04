@@ -259,7 +259,6 @@
       }
 
       try {
-        // Inicialización nativa con la librería oficial de Google
         const ai = new GoogleGenAI({ apiKey: apiKey });
         
         const promptSistema = `Eres INA, la asistente Senior de RRHH y Operaciones de Planta. 
@@ -273,7 +272,7 @@ Procesa la novedad del usuario y responde estrictamente en formato JSON válido 
 }`;
 
         const response = await ai.models.generateContent({
-          model: 'gemini-1.5-flash',
+          model: 'gemini-2.5-flash',
           contents: promptSistema + "\nNota de usuario: " + texto,
         });
 
@@ -373,7 +372,7 @@ Procesa la novedad del usuario y responde estrictamente en formato JSON válido 
 Notas: ${JSON.stringify(items)}`;
 
         const response = await ai.models.generateContent({
-          model: 'gemini-1.5-flash',
+          model: 'gemini-2.5-flash',
           contents: promptJefe,
         });
 
