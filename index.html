@@ -6,8 +6,15 @@
   <title>INA Pro - Strategic HR Partner</title>
   <meta name="theme-color" content="#020617">
   <script src="https://cdn.tailwindcss.com"></script>
+  <!-- LIBRERÍA OFICIAL DE GOOGLE GEMINI -->
+  <script type="importmap">
+    {
+      "imports": {
+        "@google/genai": "https://esm.run/@google/genai"
+      }
+    }
+  </script>
   <style>
-    /* Asegura que el contenedor de chat ocupe exactamente el alto visible y la barra inferior flote siempre */
     html, body {
       height: 100%;
       margin: 0;
@@ -51,7 +58,7 @@
     <div id="modal-key" class="hidden bg-slate-900 border-b border-purple-500/40 p-2.5 flex flex-col gap-2 shrink-0">
       <p class="text-xs text-purple-300 font-bold">🔑 Configurar tu API Key de Gemini:</p>
       <div class="flex gap-2">
-        <input type="password" id="input-key" placeholder="Pega tu clave AI Studio aquí..." class="flex-1 bg-slate-950 border border-purple-800 rounded-lg px-2.5 py-1.5 text-xs text-slate-100 outline-none focus:border-purple-500">
+        <input type="password" id="input-key" placeholder="Pega tu clave AQ... aquí..." class="flex-1 bg-slate-950 border border-purple-800 rounded-lg px-2.5 py-1.5 text-xs text-slate-100 outline-none focus:border-purple-500">
         <button onclick="guardarKey()" class="bg-purple-600 text-white text-xs px-3 py-1.5 rounded-lg font-bold">Guardar</button>
       </div>
     </div>
@@ -71,7 +78,6 @@
 
     <!-- VISTA CHAT -->
     <div id="vista-chat" class="flex-1 flex flex-col min-h-0 bg-slate-900/80 relative overflow-hidden">
-      <!-- Contenedor de mensajes con espacio inferior para que no tape la barra -->
       <div id="contenedor-mensajes" class="flex-1 overflow-y-auto p-3 space-y-2.5 pb-20">
         <div class="flex justify-start">
           <div class="max-w-[92%] bg-slate-800/90 border border-purple-500/20 rounded-2xl rounded-bl-none p-3 text-xs text-slate-200 shadow-lg leading-relaxed">
@@ -81,7 +87,7 @@
         </div>
       </div>
       
-      <!-- BARRA DE ENTRADA FIJA INFERIOR -->
+      <!-- BARRA DE ENTRADA FIJA ABAJO -->
       <div class="absolute bottom-0 left-0 right-0 p-2.5 bg-slate-950 border-t border-purple-900/60 flex gap-2 items-center z-30 shadow-2xl">
         <input 
           type="text" 
@@ -132,7 +138,9 @@
     </div>
   </div>
 
-  <script>
+  <script type="module">
+    import { GoogleGenAI } from '@google/genai';
+
     let items = JSON.parse(localStorage.getItem('ina_rrhh_items')) || [];
     let empleados = JSON.parse(localStorage.getItem('ina_rrhh_empleados')) || [];
     let apiKey = localStorage.getItem('ina_gemini_api_key') || '';
@@ -142,18 +150,18 @@
       document.getElementById('input-key').value = apiKey;
     }
 
-    function alternarModalKey() {
+    window.alternarModalKey = function() {
       document.getElementById('modal-key').classList.toggle('hidden');
-    }
+    };
 
-    function guardarKey() {
+    window.guardarKey = function() {
       apiKey = document.getElementById('input-key').value.trim();
       localStorage.setItem('ina_gemini_api_key', apiKey);
       alert('🔑 Clave guardada correctamente.');
-      alternarModalKey();
-    }
+      window.alternarModalKey();
+    };
 
-    function cambiarPestana(pestana) {
+    window.cambiarPestana = function(pestana) {
       document.getElementById('vista-chat').classList.add('hidden');
       document.getElementById('vista-agenda').classList.add('hidden');
       document.getElementById('vista-nomina').classList.add('hidden');
@@ -174,9 +182,9 @@
         document.getElementById('btn-nomina').className = "flex-1 py-2 text-xs font-bold border-b-2 border-purple-500 text-purple-300 bg-purple-950/20";
         renderNomina();
       }
-    }
+    };
 
-    function guardarEmpleado() {
+    window.guardarEmpleado = function() {
       const nombre = document.getElementById('nom-nombre').value.trim();
       const legajo = document.getElementById('nom-legajo').value.trim();
       const puesto = document.getElementById('nom-puesto').value.trim();
@@ -196,7 +204,7 @@
       document.getElementById('nom-variable').value = '';
 
       renderNomina();
-    }
+    };
 
     function renderNomina() {
       const contenedor = document.getElementById('lista-empleados');
@@ -216,13 +224,13 @@
       `).join('');
     }
 
-    function eliminarEmpleado(id) {
+    window.eliminarEmpleado = function(id) {
       empleados = empleados.filter(e => e.id !== id);
       localStorage.setItem('ina_rrhh_empleados', JSON.stringify(empleados));
       renderNomina();
-    }
+    };
 
-    async function enviarMensaje() {
+    window.enviarMensaje = async function() {
       const input = document.getElementById('input-mensaje');
       const texto = input.value.trim();
       if (!texto) return;
@@ -250,26 +258,26 @@
         return;
       }
 
-      const promptSistema = `Eres INA, la asistente Senior de RRHH y Operaciones de Planta. 
+      try {
+        // Inicialización nativa con la librería oficial de Google
+        const ai = new GoogleGenAI({ apiKey: apiKey });
+        
+        const promptSistema = `Eres INA, la asistente Senior de RRHH y Operaciones de Planta. 
 Nómina actual: ${JSON.stringify(empleados)}.
-Procesa la novedad del usuario y responde estrictamente en formato JSON válido (sin bloques markdown adicionales de código, solo el objeto plano):
+Procesa la novedad del usuario y responde estrictamente en formato JSON válido (sin etiquetas markdown ni texto fuera del JSON):
 {
   "analisis": "Análisis y plan de acción estructurado con plazos",
-  "titulo": "Título muy corto (máximo 6 palabras)",
+  "titulo": "Título corto (máximo 6 palabras)",
   "prioridad": "alta",
   "categoria": "Desempeño"
 }`;
 
-      try {
-        const res = await fetch(`https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            contents: [{ parts: [{ text: promptSistema + "\nNota: " + texto }] }]
-          })
+        const response = await ai.models.generateContent({
+          model: 'gemini-1.5-flash',
+          contents: promptSistema + "\nNota de usuario: " + texto,
         });
-        const data = await res.json();
-        const rawText = data.candidates[0].content.parts[0].text;
+
+        const rawText = response.text;
         const jsonMatch = rawText.match(/\{[\s\S]*\}/);
         const parsed = JSON.parse(jsonMatch[0]);
 
@@ -294,16 +302,17 @@ Procesa la novedad del usuario y responde estrictamente en formato JSON válido 
           </div>
         `;
       } catch (err) {
+        console.error(err);
         contenedor.innerHTML += `
           <div class="flex justify-start">
             <div class="max-w-[90%] bg-slate-800 border border-red-500/30 text-red-300 rounded-2xl rounded-bl-none p-3 text-xs">
-              Error al procesar. Revisa tu API Key en AI Studio.
+              Error al procesar: ${err.message || 'Verifica tu API Key'}.
             </div>
           </div>
         `;
       }
       contenedor.scrollTop = contenedor.scrollHeight;
-    }
+    };
 
     function renderAgenda() {
       const lista = document.getElementById('lista-agenda');
@@ -338,41 +347,39 @@ Procesa la novedad del usuario y responde estrictamente en formato JSON válido 
       }).join('');
     }
 
-    function filtrarAgenda(prioridad) {
+    window.filtrarAgenda = function(prioridad) {
       filtroActual = prioridad;
       renderAgenda();
-    }
+    };
 
-    function eliminarItem(id) {
+    window.eliminarItem = function(id) {
       items = items.filter(i => i.id !== id);
       localStorage.setItem('ina_rrhh_items', JSON.stringify(items));
       renderAgenda();
-    }
+    };
 
-    async function generarReporteJefe() {
+    window.generarReporteJefe = async function() {
       if (items.length === 0) { alert('No hay registros.'); return; }
       if (!apiKey) { alert('Configura la Clave primero.'); return; }
 
       alert('Generando reporte...');
-      const promptJefe = `Genera un reporte de 3 bloques para una reunión de 5 minutos con el jefe:
+      try {
+        const ai = new GoogleGenAI({ apiKey: apiKey });
+        const promptJefe = `Genera un reporte de 3 bloques para una reunión de 5 minutos con el jefe:
 1. ¿Dónde estamos?
 2. ¿Qué hicimos?
 3. ¿Qué falta / Pendientes críticos?
 
 Notas: ${JSON.stringify(items)}`;
 
-      try {
-        const res = await fetch(`https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            contents: [{ parts: [{ text: promptJefe }] }]
-          })
+        const response = await ai.models.generateContent({
+          model: 'gemini-1.5-flash',
+          contents: promptJefe,
         });
-        const data = await res.json();
-        const reporte = data.candidates[0].content.parts[0].text;
+
+        const reporte = response.text;
         
-        cambiarPestana('chat');
+        window.cambiarPestana('chat');
         const contenedor = document.getElementById('contenedor-mensajes');
         contenedor.innerHTML += `
           <div class="flex justify-start">
@@ -386,7 +393,7 @@ Notas: ${JSON.stringify(items)}`;
       } catch (err) {
         alert('Error al generar el reporte.');
       }
-    }
+    };
   </script>
 </body>
 </html>
