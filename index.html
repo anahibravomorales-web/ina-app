@@ -4,119 +4,121 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>INA Pro - Strategic HR Partner</title>
-  
   <meta name="theme-color" content="#3b0764">
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-title" content="INA HR">
-  <link rel="manifest" href='data:application/manifest+json,{"name":"INA RRHH Pro","short_name":"INA","start_url":".","display":"standalone","background_color":"#020617","theme_color":"#3b0764","icons":[{"src":"https://cdn-icons-png.flaticon.com/512/3135/3135715.png","sizes":"512x512","type":"image/png"}]}'>
-
   <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Corrección de altura para pantallas móviles de celulares */
+    html, body {
+      height: 100%;
+      height: -webkit-fill-available;
+      overflow: hidden;
+    }
+  </style>
 </head>
-<body class="bg-slate-950 h-screen w-screen flex flex-col justify-center items-center m-0 p-0 overflow-hidden font-sans text-slate-100 select-none">
+<body class="bg-slate-950 text-slate-100 flex flex-col h-screen w-screen m-0 p-0 font-sans select-none overflow-hidden">
 
-  <div class="w-full max-w-md h-full sm:h-[94vh] bg-slate-900 sm:rounded-3xl shadow-2xl flex flex-col overflow-hidden border border-purple-900/40">
+  <!-- Encabezado Pro -->
+  <header class="bg-gradient-to-r from-purple-950 via-purple-900 to-indigo-950 text-white p-3 flex items-center justify-between border-b border-purple-800/50 shadow-lg shrink-0">
+    <div class="flex items-center gap-2">
+      <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-purple-600 to-indigo-500 flex items-center justify-center font-black text-sm shadow-md">
+        INA
+      </div>
+      <div>
+        <h1 class="font-bold text-xs leading-tight">INA HR Pro</h1>
+        <p class="text-[9px] text-purple-300/80">People Operations</p>
+      </div>
+    </div>
+    <div class="flex gap-1.5">
+      <button onclick="alternarModalKey()" class="text-[10px] font-bold bg-purple-800/60 hover:bg-purple-700 text-purple-200 px-2 py-1 rounded-lg border border-purple-600/40">
+        🔑 Key
+      </button>
+      <button onclick="generarReporteJefe()" class="text-[10px] font-bold bg-indigo-800/60 hover:bg-indigo-700 text-indigo-200 px-2 py-1 rounded-lg border border-indigo-600/40">
+        📊 Jefe
+      </button>
+    </div>
+  </header>
+
+  <!-- Modal para pegar la API Key sin bloqueos -->
+  <div id="modal-key" class="hidden bg-slate-900 border-b border-purple-500/40 p-3 flex flex-col gap-2 shrink-0">
+    <p class="text-[11px] text-purple-300 font-bold">🔑 Configurar tu API Key de Gemini:</p>
+    <div class="flex gap-2">
+      <input type="password" id="input-key" placeholder="Pega tu clave AI Studio aquí..." class="flex-1 bg-slate-950 border border-purple-800 rounded-lg px-2.5 py-1.5 text-xs text-slate-100 outline-none focus:border-purple-500">
+      <button onclick="guardarKey()" class="bg-purple-600 text-white text-xs px-3 py-1.5 rounded-lg font-bold">Guardar</button>
+    </div>
+  </div>
+
+  <!-- Navegación de Pestañas -->
+  <div class="flex border-b border-purple-900/40 bg-slate-950 shrink-0">
+    <button onclick="cambiarPestana('chat')" id="btn-chat" class="flex-1 py-2 text-xs font-bold border-b-2 border-purple-500 text-purple-300 bg-purple-950/20">
+      💬 Chat IA
+    </button>
+    <button onclick="cambiarPestana('agenda')" id="btn-agenda" class="flex-1 py-2 text-xs font-bold text-slate-400">
+      📋 Tablero
+    </button>
+    <button onclick="cambiarPestana('nomina')" id="btn-nomina" class="flex-1 py-2 text-xs font-bold text-slate-400">
+      👥 Nómina
+    </button>
+  </div>
+
+  <!-- VISTA CHAT -->
+  <div id="vista-chat" class="flex-1 flex flex-col min-h-0 bg-slate-900/80">
+    <div id="contenedor-mensajes" class="flex-1 overflow-y-auto p-3 space-y-3">
+      <div class="flex justify-start">
+        <div class="max-w-[90%] bg-slate-800/90 border border-purple-500/20 rounded-2xl rounded-bl-none p-3 text-xs text-slate-200 shadow-lg leading-relaxed">
+          <p class="font-semibold text-purple-300 mb-1">💼 INA conectada a la Nómina de Planta.</p>
+          Escribe o díctame el torbellino de novedades de tus recorridas. Las cruzaré con el personal registrado, los horarios y tus variables.
+        </div>
+      </div>
+    </div>
     
-    <!-- Encabezado Pro -->
-    <header class="bg-gradient-to-r from-purple-950 via-purple-900 to-indigo-950 text-white p-3.5 flex items-center justify-between border-b border-purple-800/50 shadow-lg shrink-0">
-      <div class="flex items-center gap-2.5">
-        <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-purple-600 to-indigo-500 flex items-center justify-center font-black text-lg shadow-md border border-purple-300/30">
-          INA
-        </div>
-        <div>
-          <div class="flex items-center gap-1.5">
-            <h1 class="font-bold text-sm leading-tight tracking-wide">INA HR Pro</h1>
-            <span class="bg-purple-500/20 text-purple-300 text-[9px] font-semibold px-1.5 py-0.5 rounded-full border border-purple-500/30">AI Plant Ops</span>
-          </div>
-          <p class="text-[10px] text-purple-300/80">People Operations & Strategy</p>
-        </div>
-      </div>
-      <div class="flex gap-1">
-        <button onclick="configurarApiKey()" title="Configurar API Key" class="text-[11px] bg-purple-800/50 hover:bg-purple-700/60 text-purple-200 px-2 py-1 rounded-xl border border-purple-700/50 transition">
-          🔑 Key
-        </button>
-        <button onclick="generarReporteJefe()" title="Reporte Ejecutivo para Jefe" class="text-[11px] bg-indigo-800/50 hover:bg-indigo-700/60 text-indigo-200 px-2 py-1 rounded-xl border border-indigo-700/50 transition">
-          📊 Jefe
-        </button>
-        <button onclick="exportarDatos()" title="Copia de Seguridad" class="text-[11px] bg-purple-900/40 hover:bg-purple-800/60 text-purple-300 px-2 py-1 rounded-xl border border-purple-800/40 transition">
-          📥
-        </button>
-      </div>
-    </header>
-
-    <!-- Navegación de 3 Pestañas -->
-    <div class="flex border-b border-purple-900/40 bg-slate-950/80 shrink-0">
-      <button onclick="cambiarPestana('chat')" id="btn-chat" class="flex-1 py-2.5 text-xs font-bold border-b-2 border-purple-500 text-purple-300 bg-purple-950/20 transition">
-        💬 Chat IA
-      </button>
-      <button onclick="cambiarPestana('agenda')" id="btn-agenda" class="flex-1 py-2.5 text-xs font-bold text-slate-400 hover:text-slate-200 transition">
-        📋 Tablero
-      </button>
-      <button onclick="cambiarPestana('nomina')" id="btn-nomina" class="flex-1 py-2.5 text-xs font-bold text-slate-400 hover:text-slate-200 transition">
-        👥 Nómina
+    <!-- BARRA DE ENTRADA (Siempre visible) -->
+    <div class="p-2.5 bg-slate-950 border-t border-purple-900/40 flex gap-2 items-center shrink-0">
+      <input 
+        type="text" 
+        id="input-mensaje" 
+        placeholder="Escribe o dicta tus novedades..." 
+        onkeydown="if(event.key === 'Enter') enviarMensaje()"
+        class="flex-1 bg-slate-900 border border-purple-900/60 rounded-xl px-3 py-2.5 text-xs text-slate-100 outline-none focus:border-purple-500 transition placeholder-slate-500"
+      />
+      <button onclick="enviarMensaje()" class="bg-purple-600 hover:bg-purple-500 text-white rounded-xl px-4 py-2.5 font-bold shadow-lg text-xs shrink-0">
+        Enviar
       </button>
     </div>
+  </div>
 
-    <!-- VISTA CHAT -->
-    <div id="vista-chat" class="flex-1 flex flex-col justify-between overflow-hidden bg-slate-900/80">
-      <div id="contenedor-mensajes" class="flex-1 overflow-y-auto p-3.5 space-y-3">
-        <div class="flex justify-start">
-          <div class="max-w-[90%] bg-slate-800/90 border border-purple-500/20 rounded-2xl rounded-bl-none p-3 text-xs text-slate-200 shadow-lg leading-relaxed">
-            <p class="font-semibold text-purple-300 mb-1">💼 INA conectada a la Nómina de Planta.</p>
-            Escribe o díctame el torbellino de novedades de tus recorridas. Las cruzaré con el personal registrado, los horarios y tus variables para estructurar tu plan de acción.
-          </div>
+  <!-- VISTA TABLERO -->
+  <div id="vista-agenda" class="flex-1 p-3 flex flex-col min-h-0 bg-slate-900/80 hidden">
+    <div class="flex gap-1.5 overflow-x-auto pb-1.5 shrink-0">
+      <button onclick="filtrarAgenda('todas')" id="f-todas" class="filtro-btn px-2.5 py-1 rounded-lg text-[10px] font-bold bg-purple-600 text-white">Todas</button>
+      <button onclick="filtrarAgenda('alta')" id="f-alta" class="filtro-btn px-2.5 py-1 rounded-lg text-[10px] font-bold bg-slate-800 text-red-400 border border-red-900/40">🔴 Alta</button>
+      <button onclick="filtrarAgenda('media')" id="f-media" class="filtro-btn px-2.5 py-1 rounded-lg text-[10px] font-bold bg-slate-800 text-yellow-400 border border-yellow-900/40">🟡 Media</button>
+      <button onclick="filtrarAgenda('baja')" id="f-baja" class="filtro-btn px-2.5 py-1 rounded-lg text-[10px] font-bold bg-slate-800 text-green-400 border border-green-900/40">🟢 Baja</button>
+    </div>
+    <div id="lista-agenda" class="flex-1 overflow-y-auto space-y-2 mt-2 pr-1"></div>
+  </div>
+
+  <!-- VISTA NÓMINA -->
+  <div id="vista-nomina" class="flex-1 p-3 flex flex-col overflow-y-auto min-h-0 bg-slate-900/80 hidden space-y-3">
+    <div class="bg-slate-800/80 p-3 rounded-2xl border border-purple-900/40 shadow">
+      <h3 class="text-xs font-bold text-purple-300 mb-2">➕ Cargar / Editar Empleado</h3>
+      <div class="space-y-2 text-xs">
+        <input type="text" id="nom-nombre" placeholder="Nombre completo" class="w-full bg-slate-900 border border-purple-900/50 rounded-lg p-2 text-slate-100 outline-none">
+        <div class="flex gap-2">
+          <input type="text" id="nom-legajo" placeholder="Legajo" class="w-1/2 bg-slate-900 border border-purple-900/50 rounded-lg p-2 text-slate-100 outline-none">
+          <input type="text" id="nom-puesto" placeholder="Puesto / Sector" class="w-1/2 bg-slate-900 border border-purple-900/50 rounded-lg p-2 text-slate-100 outline-none">
         </div>
-      </div>
-      
-      <div class="p-2.5 bg-slate-950 border-t border-purple-900/40 flex gap-2 items-center shrink-0">
-        <input 
-          type="text" 
-          id="input-mensaje" 
-          placeholder="Escribe o dicta todo lo que pasó..." 
-          onkeydown="if(event.key === 'Enter') enviarMensaje()"
-          class="flex-1 bg-slate-900 border border-purple-900/60 rounded-xl px-3.5 py-2 text-xs text-slate-100 outline-none focus:border-purple-500 transition placeholder-slate-500"
-        />
-        <button onclick="enviarMensaje()" class="bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white rounded-xl w-9 h-9 flex items-center justify-center font-bold shadow-lg transition text-xs shrink-0">
-          ➔
+        <input type="text" id="nom-horarios" placeholder="Horarios / Turno habitual" class="w-full bg-slate-900 border border-purple-900/50 rounded-lg p-2 text-slate-100 outline-none">
+        <input type="text" id="nom-variable" placeholder="Criterios de Variable / KPI" class="w-full bg-slate-900 border border-purple-900/50 rounded-lg p-2 text-slate-100 outline-none">
+        <button onclick="guardarEmpleado()" class="w-full bg-purple-700 hover:bg-purple-600 text-white font-bold py-2 rounded-xl text-xs">
+          Guardar Empleado
         </button>
       </div>
     </div>
 
-    <!-- VISTA TABLERO -->
-    <div id="vista-agenda" class="flex-1 p-3 flex flex-col overflow-hidden bg-slate-900/80 hidden">
-      <div class="flex gap-1.5 overflow-x-auto pb-1.5 shrink-0">
-        <button onclick="filtrarAgenda('todas')" id="f-todas" class="filtro-btn px-2.5 py-1 rounded-lg text-[10px] font-bold bg-purple-600 text-white shadow">Todas</button>
-        <button onclick="filtrarAgenda('alta')" id="f-alta" class="filtro-btn px-2.5 py-1 rounded-lg text-[10px] font-bold bg-slate-800 text-red-400 border border-red-900/40">🔴 Alta</button>
-        <button onclick="filtrarAgenda('media')" id="f-media" class="filtro-btn px-2.5 py-1 rounded-lg text-[10px] font-bold bg-slate-800 text-yellow-400 border border-yellow-900/40">🟡 Media</button>
-        <button onclick="filtrarAgenda('baja')" id="f-baja" class="filtro-btn px-2.5 py-1 rounded-lg text-[10px] font-bold bg-slate-800 text-green-400 border border-green-900/40">🟢 Baja</button>
-      </div>
-      <div id="lista-agenda" class="flex-1 overflow-y-auto space-y-2 mt-2 pr-1"></div>
+    <div class="flex-1">
+      <h3 class="text-xs font-bold text-slate-300 mb-2">📋 Personal Registrado</h3>
+      <div id="lista-empleados" class="space-y-2 pb-4"></div>
     </div>
-
-    <!-- VISTA NÓMINA -->
-    <div id="vista-nomina" class="flex-1 p-3 flex flex-col overflow-y-auto bg-slate-900/80 hidden space-y-3">
-      <div class="bg-slate-800/80 p-3 rounded-2xl border border-purple-900/40 shadow">
-        <h3 class="text-xs font-bold text-purple-300 mb-2">➕ Cargar / Editar Empleado</h3>
-        <div class="space-y-2 text-xs">
-          <input type="text" id="nom-nombre" placeholder="Nombre completo (ej: Facundo Peguen)" class="w-full bg-slate-900 border border-purple-900/50 rounded-lg p-2 text-slate-100 outline-none focus:border-purple-500">
-          <div class="flex gap-2">
-            <input type="text" id="nom-legajo" placeholder="Legajo" class="w-1/2 bg-slate-900 border border-purple-900/50 rounded-lg p-2 text-slate-100 outline-none">
-            <input type="text" id="nom-puesto" placeholder="Puesto / Sector" class="w-1/2 bg-slate-900 border border-purple-900/50 rounded-lg p-2 text-slate-100 outline-none">
-          </div>
-          <input type="text" id="nom-horarios" placeholder="Horarios / Turno habitual" class="w-full bg-slate-900 border border-purple-900/50 rounded-lg p-2 text-slate-100 outline-none">
-          <input type="text" id="nom-variable" placeholder="Criterios de Variable / KPI de Desempeño" class="w-full bg-slate-900 border border-purple-900/50 rounded-lg p-2 text-slate-100 outline-none">
-          <button onclick="guardarEmpleado()" class="w-full bg-purple-700 hover:bg-purple-600 text-white font-bold py-2 rounded-xl text-xs transition">
-            Guardar en Nómina
-          </button>
-        </div>
-      </div>
-
-      <div class="flex-1">
-        <h3 class="text-xs font-bold text-slate-300 mb-2">📋 Personal Registrado</h3>
-        <div id="lista-empleados" class="space-y-2"></div>
-      </div>
-    </div>
-
   </div>
 
   <script>
@@ -125,13 +127,22 @@
     let apiKey = localStorage.getItem('ina_gemini_api_key') || '';
     let filtroActual = 'todas';
 
-    function configurarApiKey() {
-      const key = prompt('Pega tu API Key gratuita de Gemini:', apiKey);
-      if (key !== null) {
-        apiKey = key.trim();
-        localStorage.setItem('ina_gemini_api_key', apiKey);
-        alert('API Key guardada correctamente.');
-      }
+    // Cargar Key existente al inicio
+    if (apiKey) {
+      document.getElementById('input-key').value = apiKey;
+    }
+
+    function alternarModalKey() {
+      const modal = document.getElementById('modal-key');
+      modal.classList.toggle('hidden');
+    }
+
+    function guardarKey() {
+      const val = document.getElementById('input-key').value.trim();
+      apiKey = val;
+      localStorage.setItem('ina_gemini_api_key', apiKey);
+      alert('🔑 Key guardada correctamente.');
+      alternarModalKey();
     }
 
     function cambiarPestana(pestana) {
@@ -139,20 +150,20 @@
       document.getElementById('vista-agenda').classList.add('hidden');
       document.getElementById('vista-nomina').classList.add('hidden');
       
-      document.getElementById('btn-chat').className = "flex-1 py-2.5 text-xs font-bold text-slate-400 transition";
-      document.getElementById('btn-agenda').className = "flex-1 py-2.5 text-xs font-bold text-slate-400 transition";
-      document.getElementById('btn-nomina').className = "flex-1 py-2.5 text-xs font-bold text-slate-400 transition";
+      document.getElementById('btn-chat').className = "flex-1 py-2 text-xs font-bold text-slate-400";
+      document.getElementById('btn-agenda').className = "flex-1 py-2 text-xs font-bold text-slate-400";
+      document.getElementById('btn-nomina').className = "flex-1 py-2 text-xs font-bold text-slate-400";
 
       if (pestana === 'chat') {
         document.getElementById('vista-chat').classList.remove('hidden');
-        document.getElementById('btn-chat').className = "flex-1 py-2.5 text-xs font-bold border-b-2 border-purple-500 text-purple-300 bg-purple-950/20 transition";
+        document.getElementById('btn-chat').className = "flex-1 py-2 text-xs font-bold border-b-2 border-purple-500 text-purple-300 bg-purple-950/20";
       } else if (pestana === 'agenda') {
         document.getElementById('vista-agenda').classList.remove('hidden');
-        document.getElementById('btn-agenda').className = "flex-1 py-2.5 text-xs font-bold border-b-2 border-purple-500 text-purple-300 bg-purple-950/20 transition";
+        document.getElementById('btn-agenda').className = "flex-1 py-2 text-xs font-bold border-b-2 border-purple-500 text-purple-300 bg-purple-950/20";
         renderAgenda();
       } else {
         document.getElementById('vista-nomina').classList.remove('hidden');
-        document.getElementById('btn-nomina').className = "flex-1 py-2.5 text-xs font-bold border-b-2 border-purple-500 text-purple-300 bg-purple-950/20 transition";
+        document.getElementById('btn-nomina').className = "flex-1 py-2 text-xs font-bold border-b-2 border-purple-500 text-purple-300 bg-purple-950/20";
         renderNomina();
       }
     }
@@ -192,7 +203,7 @@
             <p class="text-[10px] text-slate-400">Legajo: ${e.legajo || 'S/D'} | Horario: ${e.horarios || 'S/D'}</p>
             <p class="text-[10px] text-slate-300 mt-1">KPI: ${e.variable || 'Sin especificación'}</p>
           </div>
-          <button onclick="eliminarEmpleado(${e.id})" class="text-red-400 text-xs">✕</button>
+          <button onclick="eliminarEmpleado(${e.id})" class="text-red-400 text-xs font-bold">✕</button>
         </div>
       `).join('');
     }
@@ -223,7 +234,7 @@
         contenedor.innerHTML += `
           <div class="flex justify-start">
             <div class="max-w-[90%] bg-slate-800 border border-red-500/40 text-red-300 rounded-2xl rounded-bl-none p-3 text-xs">
-              ⚠️ Falta configurar la API Key. Toca el botón 🔑 Key arriba y pégala para que INA procese tu nota.
+              ⚠️ Falta la Key. Toca el botón 🔑 Key arriba y pégala para responder.
             </div>
           </div>
         `;
@@ -231,20 +242,12 @@
         return;
       }
 
-      // Prompt para Gemini
       const promptSistema = `Eres INA, la asistente Senior de RRHH y Operaciones de Planta. 
-Nómina actual de la empresa: ${JSON.stringify(empleados)}.
-El usuario te enviará notas o novedades en crudo de su día a día.
-Tu tarea es:
-1. Identificar si menciona a alguien de la nómina o una tarea operativa.
-2. Formular un análisis breve y un plan de acción estructurado con plazos (24h, 48h, esta semana).
-3. Determinar la Prioridad: "alta", "media" o "baja".
-4. Determinar un título resumido corto (máximo 6 palabras).
-
-Debes responder estrictamente en formato JSON con la siguiente estructura:
+Nómina actual: ${JSON.stringify(empleados)}.
+Procesa la novedad del usuario y responde estrictamente en JSON:
 {
-  "analisis": "Tu respuesta técnica de RRHH en texto amigable y directo",
-  "titulo": "Título muy corto",
+  "analisis": "Análisis y plan de acción estructurado con plazos",
+  "titulo": "Título muy corto (máximo 6 palabras)",
   "prioridad": "alta/media/baja",
   "categoria": "Desempeño/Operativa/Asistencia/Mantenimiento"
 }`;
@@ -254,7 +257,7 @@ Debes responder estrictamente en formato JSON con la siguiente estructura:
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            contents: [{ parts: [{ text: promptSistema + "\nNota del usuario: " + texto }] }]
+            contents: [{ parts: [{ text: promptSistema + "\nNota: " + texto }] }]
           })
         });
         const data = await res.json();
@@ -269,8 +272,7 @@ Debes responder estrictamente en formato JSON con la siguiente estructura:
           titulo: parsed.titulo,
           prioridad: parsed.prioridad.toLowerCase(),
           categoria: parsed.categoria,
-          analisis: parsed.analisis,
-          estado: 'pendiente'
+          analisis: parsed.analisis
         };
         items.unshift(nuevoItem);
         localStorage.setItem('ina_rrhh_items', JSON.stringify(items));
@@ -278,7 +280,7 @@ Debes responder estrictamente en formato JSON con la siguiente estructura:
         contenedor.innerHTML += `
           <div class="flex justify-start">
             <div class="max-w-[90%] bg-slate-800 border border-purple-500/30 text-slate-200 rounded-2xl rounded-bl-none p-3 text-xs leading-relaxed shadow-lg">
-              <span class="text-[9px] font-bold bg-purple-900 text-purple-300 px-2 py-0.5 rounded border border-purple-700/50 block w-max mb-1 uppercase">${parsed.categoria} | Priority: ${parsed.prioridad}</span>
+              <span class="text-[9px] font-bold bg-purple-900 text-purple-300 px-2 py-0.5 rounded border border-purple-700/50 block w-max mb-1 uppercase">${parsed.categoria} | Prioridad: ${parsed.prioridad}</span>
               ${parsed.analisis}
             </div>
           </div>
@@ -287,7 +289,7 @@ Debes responder estrictamente en formato JSON con la siguiente estructura:
         contenedor.innerHTML += `
           <div class="flex justify-start">
             <div class="max-w-[90%] bg-slate-800 border border-red-500/30 text-red-300 rounded-2xl rounded-bl-none p-3 text-xs">
-              Hubo un error al procesar con IA. Verifica tu API Key o conexión a internet.
+              Error al procesar. Revisa tu API Key.
             </div>
           </div>
         `;
@@ -303,7 +305,7 @@ Debes responder estrictamente en formato JSON con la siguiente estructura:
       }
 
       if (filtrados.length === 0) {
-        lista.innerHTML = `<p class="text-center text-slate-500 text-xs py-8">No hay registros guardados en este filtro.</p>`;
+        lista.innerHTML = `<p class="text-center text-slate-500 text-xs py-8">No hay registros guardados.</p>`;
         return;
       }
 
@@ -330,10 +332,6 @@ Debes responder estrictamente en formato JSON con la siguiente estructura:
 
     function filtrarAgenda(prioridad) {
       filtroActual = prioridad;
-      document.querySelectorAll('.filtro-btn').forEach(btn => {
-        btn.className = "filtro-btn px-2.5 py-1 rounded-lg text-[10px] font-bold bg-slate-800 text-slate-400 border border-purple-900/40";
-      });
-      document.getElementById(`f-${prioridad}`).className = "filtro-btn px-2.5 py-1 rounded-lg text-[10px] font-bold bg-purple-600 text-white shadow";
       renderAgenda();
     }
 
@@ -344,22 +342,16 @@ Debes responder estrictamente en formato JSON con la siguiente estructura:
     }
 
     async function generarReporteJefe() {
-      if (items.length === 0) {
-        alert('No hay registros guardados para generar el informe.');
-        return;
-      }
-      if (!apiKey) {
-        alert('Configura la API Key para generar el reporte ejecutivo.');
-        return;
-      }
+      if (items.length === 0) { alert('No hay registros.'); return; }
+      if (!apiKey) { alert('Configura la Key primero.'); return; }
 
-      alert('Generando resumen ejecutivo para tu jefe...');
-      const promptJefe = `Eres INA HR Pro. Genera un reporte ejecutivo breve de 3 bloques para presentarle al jefe en una reunión de 5 minutos:
-1. ¿Dónde estamos? (Estado general de la planta y nómina)
-2. ¿Qué hicimos? (Registros y novedades resueltas)
-3. ¿Qué falta / Pendientes críticos? (Acciones pendientes ordenadas por prioridad)
+      alert('Generando reporte...');
+      const promptJefe = `Genera un reporte de 3 bloques para una reunión de 5 minutos con el jefe:
+1. ¿Dónde estamos?
+2. ¿Qué hicimos?
+3. ¿Qué falta / Pendientes críticos?
 
-Historial de notas del usuario: ${JSON.stringify(items)}`;
+Notas: ${JSON.stringify(items)}`;
 
       try {
         const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`, {
@@ -376,8 +368,8 @@ Historial de notas del usuario: ${JSON.stringify(items)}`;
         const contenedor = document.getElementById('contenedor-mensajes');
         contenedor.innerHTML += `
           <div class="flex justify-start">
-            <div class="max-w-[95%] bg-indigo-950 border border-indigo-500/40 text-indigo-100 rounded-2xl p-3.5 text-xs leading-relaxed shadow-2xl">
-              <p class="font-bold text-indigo-300 text-sm mb-2 border-b border-indigo-800/60 pb-1">📊 REPORTE EJECUTIVO - REUNIÓN DE 5 MIN</p>
+            <div class="max-w-[95%] bg-indigo-950 border border-indigo-500/40 text-indigo-100 rounded-2xl p-3 text-xs leading-relaxed">
+              <p class="font-bold text-indigo-300 mb-1 border-b border-indigo-800/60 pb-1">📊 REPORTE PARA TU JEFE</p>
               <div class="whitespace-pre-wrap">${reporte}</div>
             </div>
           </div>
@@ -386,19 +378,6 @@ Historial de notas del usuario: ${JSON.stringify(items)}`;
       } catch (err) {
         alert('Error al generar el reporte.');
       }
-    }
-
-    function exportarDatos() {
-      if (items.length === 0) { alert("No hay datos para exportar."); return; }
-      let csv = "FECHA,PRIORIDAD,CATEGORIA,TITULO,NOTA\n";
-      items.forEach(i => {
-        csv += `"${i.fecha}","${i.prioridad}","${i.categoria}","${(i.titulo||'').replace(/"/g, '""')}","${i.texto.replace(/"/g, '""')}"\n`;
-      });
-      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-      const a = document.createElement('a');
-      a.href = URL.createObjectURL(blob);
-      a.download = `INA_Backup_${new Date().toISOString().slice(0,10)}.csv`;
-      a.click();
     }
   </script>
 </body>
