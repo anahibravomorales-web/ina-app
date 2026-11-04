@@ -271,9 +271,9 @@ Procesa la novedad del usuario y responde estrictamente en formato JSON válido 
   "categoria": "Desempeño"
 }`;
 
-        // Uso correcto del SDK oficial con gemini-2.5-flash
+        // Modelo actualizado solicitado por Google
         const response = await ai.models.generateContent({
-          model: 'gemini-2.5-flash',
+          model: 'gemini-3.8-flash',
           contents: promptSistema + "\nNota de usuario: " + texto,
         });
 
@@ -373,7 +373,7 @@ Procesa la novedad del usuario y responde estrictamente en formato JSON válido 
 Notas: ${JSON.stringify(items)}`;
 
         const response = await ai.models.generateContent({
-          model: 'gemini-2.5-flash',
+          model: 'gemini-3.8-flash',
           contents: promptJefe,
         });
 
